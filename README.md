@@ -1,2 +1,2 @@
-# storekinter :-)
-A tkinter GUI program to manage a store's finance
+# Medicine & Blood Donation
+Web application for medicine and blood donation from google solution challenge
