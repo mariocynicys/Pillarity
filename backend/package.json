@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "node index.js",
-    "dev": "nodemon --exec babel-node --presets=/usr/local/lib/node_modules/@babel/preset-env --ignore='foo\\|bar\\|baz' index.js"
+    "dev": "sudo nodemon --exec babel-node --presets=/usr/local/lib/node_modules/@babel/preset-env --ignore='foo\\|bar\\|baz' index.js"
   },
   "repository": {
     "type": "git",
