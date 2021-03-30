@@ -1,4 +1,4 @@
-# medicine :pill:
+# Medicine :pill:
 
 Medicine app is good
 
