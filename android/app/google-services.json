@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "778759301659",
+    "project_id": "medicine-be38c",
+    "storage_bucket": "medicine-be38c.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:778759301659:android:dc6abe079890d8deb0a6be",
+        "android_client_info": {
+          "package_name": "com.medicine"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "778759301659-mkiupq692530ft68tfr9mvh3ujjrtakn.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBbluH0WvMiVkWKq-T0VAj5vzHQRTRDpsg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "778759301659-mkiupq692530ft68tfr9mvh3ujjrtakn.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
