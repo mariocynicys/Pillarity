@@ -20,7 +20,7 @@ The application also offers a way to donate blood, where users enter their blood
 
 
 
-## Tech
+## Tech :gear:
 
 Pillarity uses a number of open source projects to work properly:
 
