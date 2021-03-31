@@ -71,7 +71,7 @@ Pillarity uses a number of open source projects to work properly:
 - [FireBase](https://firebase.google.com/) - FireBase for Authentication and Database 
 - [Sqflite](https://pub.dev/packages/sqflite) - Sqflite for DataBase
 
-## Installation :sparkler
+## Installation :sparkler:
 
 Pillarity requires [flutter](https://flutter.dev/docs) v2.1.0 to run.
 
