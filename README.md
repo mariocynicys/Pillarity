@@ -1,6 +1,6 @@
 # Medicine :pill:
 
-Medicine app is good
+Medicine app is
 
 ## Getting Started
 
