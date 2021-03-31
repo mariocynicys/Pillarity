@@ -73,4 +73,4 @@ For production environments...
 ```
 ## License
 
-> This software is licensed under MIT License, See [License](LICENSE) for more information ©Pillarity
+> This software is licensed under MIT License, See [License](./LICENSE) for more information ©Pillarity
