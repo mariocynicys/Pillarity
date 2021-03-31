@@ -1,4 +1,4 @@
-<img src="./readme_assets/logo.jpg" alt="drawing" width="1000"/>
+<img src="./readme_assets/logo.jpg" alt="logo" width="1000"/>
 <hr>
 
 # Pillarity :pill:
@@ -17,8 +17,33 @@ The application also offers a way to donate blood, where users enter their blood
 
 ## Internals :arrow_down_small:
 
+### Login page:
+<img src="./readme_assets/login.jpg" alt="login" width="300"/>
+<hr>
 
+### Registration page:
+<img src="./readme_assets/register.jpg" alt="registeration" width="300"/>
+<hr>
 
+### Profile:
+<img src="./readme_assets/profile.jpg" alt="progile" width="300"/>
+<hr>
+
+### Feed:
+<img src="./readme_assets/feed.jpg" alt="feed" width="300"/>
+<hr>
+
+### Medicine Donation Post:
+<img src="./readme_assets/post_med_filled.jpg" width="300"/>
+<hr>
+
+### Medicine Request:
+<img src="./readme_assets/req_med.jpg" width="300"/>
+<hr>
+
+### Blood Request:
+<img src="./readme_assets/req_blood_filled.jpg" width="300"/>
+<hr>
 
 ## Tech :gear:
 
