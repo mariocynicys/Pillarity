@@ -1,5 +1,5 @@
-# Pillarity :pill:
-
+<img src="./readme_assets/logo.jpg" alt="drawing" width="1000"/>
+<hr>
 An application for medicine and blood donation
 
 ## Description :shipit:
@@ -15,7 +15,6 @@ The application also offers a way to donate blood, where users enter their blood
 
 ## Internals :arrow_down_small:
 
-<img src="./readme_assets/login.jpg" alt="drawing" width="200"/>
 
 
 
