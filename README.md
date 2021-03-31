@@ -1,16 +1,18 @@
-# Medicine :pill:
+# Pillarity :pill:
 
-Medicine app is
+An application for medicine and blood donation
 
-## Getting Started
+## Description :shipit:
 
-This project is a starting point for a Flutter application.
+Pillarity aims to help people with low income to search
+for and get the medicine they need by posting a request for this medicine.
 
-A few resources to get you started if this is your first Flutter project:
+Donors can respond to the requests by providing the medicine needed (either a non-expired high-quality left-over or a brand new medicine), contributing by a finite amount of money to buy the medicine, or contributing in delivring the medicine to the one in need.
 
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
+At each stage of the medicines' trip from the donor to the recipient, a bar-code needs to be scanned to determine where the medicines are at any given time.
 
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+The application also offers a way to donate blood, where users enter their blood type, age, sex, and location, based on this data, users get notified when others ask for blood donation near them, thus making a quicker impact.
+
+## Internals :arrow_down_small:
+
+![alt text](./readme_assets/login.jpg)
