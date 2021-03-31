@@ -168,27 +168,13 @@ class _LoginPageState extends State<LoginPage> {
 
   Widget _title() {
     // Medicine
-    return RichText(
-      textAlign: TextAlign.start,
-      text: TextSpan(
-          text: appTitle[0],
-          style: GoogleFonts.portLligatSans(
-            fontSize: 30,
-            fontWeight: FontWeight.w700,
-            color: Colors.black,
-          ),
-          children: [
-            TextSpan(
-              text: appTitle.substring(1, 4),
-              style: TextStyle(
-                  color: Color.fromRGBO(203, 0, 254, 1), fontSize: 30),
-            ),
-            TextSpan(
-              text: appTitle.substring(4, appTitle.length),
-              style: TextStyle(color: Colors.black, fontSize: 30),
-            ),
-          ]),
-    );
+    return Container(
+        height: 60,
+        width: 220,
+        decoration: BoxDecoration(
+          image: DecorationImage(
+              image: AssetImage('assets/InvertedLogo.png'),fit: BoxFit.cover),
+        ));
   }
 
   Widget _createAccountLabel() {
@@ -237,15 +223,14 @@ class _LoginPageState extends State<LoginPage> {
     return InkWell(
       onTap: () async {
         if (_Key.currentState.validate()) {
-          try {
-            var result = await AuthServices().signWithEmailandpass(email, pass);
-            if (result != null)
-              Navigator.pushReplacement(context,
-                  MaterialPageRoute(builder: (context) => MedicineMainPage()));
-          } catch (e) {
-            Toast.show("error happened", context,
+          var result = await AuthServices().signWithEmailandpass(email, pass);
+          print(result);
+          if (result != null)
+            Navigator.pushReplacement(context,
+                MaterialPageRoute(builder: (context) => MedicineMainPage()));
+          else
+            Toast.show("Something Went Wrong", context,
                 duration: Toast.LENGTH_LONG, gravity: Toast.BOTTOM);
-          }
         }
       },
       child: Container(
@@ -295,9 +280,9 @@ class _LoginPageState extends State<LoginPage> {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
-                  SizedBox(height: height * .2),
-                  Hero(tag: "Title", child: _title()),
-                  SizedBox(height: 50),
+                  SizedBox(height: height * .21),
+                  _title(),
+                  // SizedBox(height: 50),
                   _emailPasswordWidget(),
                   SizedBox(height: 20),
                   login_Button(),

@@ -2,10 +2,12 @@ import 'package:animated_bottom_navigation_bar/animated_bottom_navigation_bar.da
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:medicine/Blood/Request_Blood.dart';
 import 'package:medicine/Medicine/Add_Medicine_Post.dart';
 import 'package:medicine/Medicine/Request_Medicine_Post.dart';
 import 'package:medicine/Profile.dart';
+import 'package:medicine/Shared/SharedConstants.dart';
 import 'package:page_transition/page_transition.dart';
 import 'Medicine_Main_Posts.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -20,8 +22,6 @@ class MedicineMainPage extends StatefulWidget {
 class _MedicineMainPageState extends State<MedicineMainPage> {
   int _page;
   PageController _pageController;
-  Color activeColor = Colors.blue;
-  Color inActiveColor = Colors.yellow;
 
   @override
   void initState() {
@@ -201,23 +201,21 @@ class _MedicineMainPageState extends State<MedicineMainPage> {
   Widget _navBar3() {
     return AnimatedBottomNavigationBar(
       icons: [
-        FontAwesomeIcons.waveSquare,
+        const IconData(0xe800, fontFamily: 'MyFlutterApp', fontPackage: null),
         FontAwesomeIcons.pills,
-        FontAwesomeIcons.podcast,
-        //  Icons.add,
+        Icons.home,
         Icons.person,
       ],
       activeIndex: _page,
       gapLocation: GapLocation.center,
       notchSmoothness: NotchSmoothness.defaultEdge,
-      backgroundColor: Colors.grey,
+      backgroundColor: (_page == 0) ? BloodActiveColor : MedicineActiveColor,
       activeColor: Colors.blue,
-      inactiveColor: inActiveColor,
+      inactiveColor: Colors.white,
       onTap: (i) => setState(() {
-          activeColor = Colors.blue;
-          _pageController.animateToPage(i,
-              duration: Duration(milliseconds: 100), curve: Curves.easeIn);
-          _page = i;
+        _pageController.animateToPage(i,
+            duration: Duration(milliseconds: 100), curve: Curves.easeIn);
+        _page = i;
       }),
       //other params
     );
@@ -227,6 +225,7 @@ class _MedicineMainPageState extends State<MedicineMainPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       floatingActionButton: FloatingActionButton(
+        backgroundColor: (_page == 0) ? BloodActiveColor : MedicineActiveColor,
         onPressed: () {
           Navigator.push(
               context,
@@ -235,7 +234,7 @@ class _MedicineMainPageState extends State<MedicineMainPage> {
                   child: RequestMedicinePost(),
                   duration: Duration(milliseconds: 500)));
         },
-        child: Icon(Icons.add),
+        child: Icon(Icons.add,color: Colors.white),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       drawer: _drawer(),

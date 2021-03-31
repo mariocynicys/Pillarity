@@ -6,7 +6,7 @@ class AuthServices {
   final FirebaseAuth _auth = FirebaseAuth.instance;
 
   UserModel getUserUid(User user) {
-    return user != null ? UserModel(uid: user.uid) : null;
+    return user != null ? UserModel() : null;
   }
 
   saveUid(User user) async
@@ -15,13 +15,13 @@ class AuthServices {
     await prefs.setString("uid", user.uid);
   }
 
-  Future regWithEmailandpass(String email, String password) async {
+  Future regWithEmailandPass(String email, String password) async {
     try {
       UserCredential result = await _auth.createUserWithEmailAndPassword(
           email: email, password: password);
       User user = result.user;
       saveUid(user);
-      return getUserUid(user);
+      return user;
     } catch (e) {
       print(e.toString());
       return null;
@@ -48,7 +48,9 @@ class AuthServices {
 
   Future SignOut() async {
     try {
-      return await _auth.signOut();
+      await _auth.signOut();
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      return await prefs.setString("uid", "");
     } catch (e) {
       print(e.toString());
       return null;

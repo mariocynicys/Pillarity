@@ -29,6 +29,7 @@ class _PostsState extends State<Posts> {
         margin: EdgeInsets.symmetric(horizontal: 5),
         child: Column(
           children: [
+            Container(height: 10,color: Colors.grey,),
             ListTile(
               title: Text("${widget.Auther}"),
               subtitle: Text("${widget.Medincie}"),
@@ -60,7 +61,7 @@ class _PostsState extends State<Posts> {
                 ),
               ),
             ),
-            Container(height: 10,color: Colors.grey),
+            Container(height: 0,color: Colors.grey),
           ],
         ),
       ),

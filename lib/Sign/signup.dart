@@ -3,9 +3,13 @@ import 'package:email_validator/email_validator.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:medicine/Auth/auth.dart';
 import 'package:medicine/Bezier/bezierContainer.dart';
 import 'package:medicine/ChoosePage.dart';
+import 'package:medicine/DataBase.dart';
 import 'package:medicine/Medicine/MedicineMainPage.dart';
+import 'package:medicine/Models/UserModel.dart';
+import 'package:toast/toast.dart';
 import 'LoginPage.dart';
 import '../Shared/SharedConstants.dart';
 import '../Shared/SharedWidgets.dart';
@@ -24,7 +28,9 @@ class _SignUpPageState extends State<SignUpPage> {
   String pass = '';
   String age = '';
   String name = '';
+  String country = 'Egypt';
   String _gender = "Male";
+  String phone = "";
   final _key = GlobalKey<FormState>();
 
   Widget _entryField(String title, {bool isPassword = false}) {
@@ -59,26 +65,13 @@ class _SignUpPageState extends State<SignUpPage> {
 
   Widget _title() {
     // Medicine
-    return RichText(
-      textAlign: TextAlign.start,
-      text: TextSpan(
-          text: appTitle[0],
-          style: GoogleFonts.portLligatSans(
-            fontSize: 30,
-            fontWeight: FontWeight.w700,
-            color: Colors.black,
-          ),
-          children: [
-            TextSpan(
-              text: appTitle.substring(1,4),
-              style: TextStyle(color: Color.fromRGBO(203, 0, 254, 1), fontSize: 30),
-            ),
-            TextSpan(
-              text: appTitle.substring(4,appTitle.length),
-              style: TextStyle(color: Colors.black, fontSize: 30),
-            ),
-          ]),
-    );
+    return Container(
+        height: 60,
+        width: 220,
+        decoration: BoxDecoration(
+          image: DecorationImage(
+              image: AssetImage('assets/InvertedLogo.png'),fit: BoxFit.cover),
+        ));
   }
 
   Widget _nameField() {
@@ -95,12 +88,10 @@ class _SignUpPageState extends State<SignUpPage> {
             height: 10,
           ),
           TextFormField(
-            onChanged: (String value) => name=value,
-
+              onChanged: (String value) => name = value,
               validator: (value) {
                 if (value.isEmpty)
                   return "Please Enter your Name";
-
                 else
                   return null;
               },
@@ -131,7 +122,7 @@ class _SignUpPageState extends State<SignUpPage> {
                 height: 10,
               ),
               TextFormField(
-                  onChanged: (String value) => age=value,
+                  onChanged: (String value) => age = value,
                   validator: (value) {
                     if (value.isEmpty)
                       return "Please enter your Age";
@@ -175,12 +166,11 @@ class _SignUpPageState extends State<SignUpPage> {
                 height: 10,
               ),
               TextFormField(
-                  onChanged: (String value) => email=value,
+                  onChanged: (String value) => email = value,
                   validator: (value) {
                     if (!EmailValidator.validate(value))
                       return "Please enter a valid email";
                     else
-
                       return null;
                   },
                   obscureText: false,
@@ -204,7 +194,7 @@ class _SignUpPageState extends State<SignUpPage> {
                 height: 10,
               ),
               TextFormField(
-                  onChanged: (String value) => pass=value,
+                  onChanged: (String value) => pass = value,
                   validator: (value) {
                     if (value.length < 8)
                       return "Please Choose 8 char Password";
@@ -223,12 +213,61 @@ class _SignUpPageState extends State<SignUpPage> {
     );
   }
 
+  Widget _phone() {
+    return Container(
+      padding: EdgeInsets.symmetric(vertical: 10, horizontal: 5),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          Text(
+            "Phone Number",
+            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15),
+          ),
+          SizedBox(
+            height: 10,
+          ),
+          TextFormField(
+              onChanged: (String value) => phone = value,
+              validator: (value) {
+                if (value.isEmpty)
+                  return "Please Enter your Phone";
+                else
+                  return null;
+              },
+              obscureText: false,
+              decoration: InputDecoration(
+                  border: InputBorder.none,
+                  fillColor: Color(0xfff3f3f4),
+                  filled: true))
+        ],
+      ),
+    );
+  }
+
   Widget RegisterButton() {
     return InkWell(
-      onTap: () {
+      onTap: () async {
         if (_key.currentState.validate()) {
-          Navigator.push(context,
-              MaterialPageRoute(builder: (context) => MedicineMainPage()));
+          var result = await AuthServices().regWithEmailandPass(email, pass);
+
+          if (result != null) {
+            int ruesult = await DataBaseHelper.instance.insertIntoInfo({
+              DataBaseHelper().Name: name,
+              DataBaseHelper().Phone: phone,
+              DataBaseHelper().Loaction: country,
+              DataBaseHelper().Email: email
+            });
+
+            if (ruesult == 0)
+              Toast.show("Database error", context, duration: Toast.LENGTH_LONG);
+            else
+              Toast.show("Successful", context, duration: Toast.LENGTH_LONG);
+
+            Navigator.pushReplacement(context,
+                MaterialPageRoute(builder: (context) => MedicineMainPage()));
+          } else
+            Toast.show("Something Went Wrong", context,
+                duration: Toast.LENGTH_LONG, gravity: Toast.BOTTOM);
         }
       },
       child: Container(
@@ -314,6 +353,7 @@ class _SignUpPageState extends State<SignUpPage> {
                 ),
                 // if you need costume picker use this
                 pickerBuilder: (context, CountryCode countryCode) {
+                  country = countryCode.name;
                   return Row(
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
@@ -369,8 +409,8 @@ class _SignUpPageState extends State<SignUpPage> {
           ),
           InkWell(
             onTap: () {
-              Navigator.pushReplacement(
-                  context, MaterialPageRoute(builder: (context) => LoginPage()));
+              Navigator.pushReplacement(context,
+                  MaterialPageRoute(builder: (context) => LoginPage()));
             },
             child: Text(
               'Login',
@@ -422,10 +462,12 @@ class _SignUpPageState extends State<SignUpPage> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: <Widget>[
-                      SizedBox(height: height * .2),
+                      SizedBox(height: height * .21),
                       _title(),
-                      SizedBox(height: 50),
+                      SizedBox(height: 10),
                       _mainRegisterationForm(),
+                      SizedBox(height: 20),
+                      _phone(),
                       SizedBox(height: 20),
                       RegisterButton(),
                       _loginAccountLabel(),

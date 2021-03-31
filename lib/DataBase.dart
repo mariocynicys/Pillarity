@@ -6,25 +6,22 @@ class DataBaseHelper {
   final String _dbName = "Medical.db";
 
   // DataBase Of Medicines
-  final String medicinesTable = "Medicines";
-  final String medicineID = "ID";
-  final String medicineName = "Name";
-
-
-  // DataBase Of Search History
-  final String SearchHistoryTable = "SearchHistory";
-  final String SearchHistoryText = "Search";
-
-  // DataBase Of Messages
-  final String MessagesTable  = "SearchHistory";
-  final String OtherUserID = "UserID";
-  final String PostID = "PostID";
+  final String infoTable = "Info";
+  final String ID = "ID";
+  final String Name = "Name";
+  final String Phone = "Phone";
+  final String Loaction = "Loaction";
+  final String Email = "Email";
 
   static DataBaseHelper _dataBaseHelper;
 
   static Database _database;
 
   DataBaseHelper._createInstance();
+
+  DataBaseHelper._privateConstructor();
+
+  static final DataBaseHelper instance = DataBaseHelper._privateConstructor();
 
   factory DataBaseHelper() {
     if (_dataBaseHelper == null) {
@@ -50,30 +47,19 @@ class DataBaseHelper {
 
   Future<void> _onCreate(Database db, int version) async {
     await db.execute('''
-        CREATE TABLE $medicinesTable (
-        $medicineID INTEGER PRIMARY KEY AUTOINCREMENT,
-        $medicineName TEXT,
+        CREATE TABLE $infoTable (
+        $ID Integer Primary Key Autoincrement,
+        $Name TEXT,
+        $Phone TEXT,
+        $Loaction TEXT,
+        $Email TEXT
+        )
         ''');
-
-    await db.execute('''
-        CREATE TABLE $SearchHistoryTable (
-        $SearchHistoryText TEXT,
-        ''');
-
-    await db.execute('''
-        CREATE TABLE $MessagesTable (
-        $OtherUserID TEXT,
-        $PostID TEXT,
-        ''');
-
-
-
   }
 
-
-  Future<int> insertIntoHistory(Map<String, dynamic> row) async {
+  Future<int> insertIntoInfo(Map<String, dynamic> row) async {
     Database db = await this.database;
-    return await db.insert(medicinesTable, row);
+    return await db.insert(infoTable, row);
   }
 
   Future<int> update(Map<String, dynamic> row) async {
@@ -83,10 +69,14 @@ class DataBaseHelper {
     //     .update(_tableName, row, where: '$columIndex = ?', whereArgs: [index]);
   }
 
-  FutureOr<List<Map<String, dynamic>>> GetAllMedicne() async {
+  FutureOr<List<Map<String, dynamic>>> GetAllInfo() async {
     Database db = await this.database;
-    List<Map<String, dynamic>> list = await db.query(medicinesTable);
-
+    List<Map<String, dynamic>> list = await db.query(infoTable);
     return list;
+  }
+
+  Future<int> delete(int id) async {
+    Database db = await this.database;
+    return db.delete(infoTable);
   }
 }

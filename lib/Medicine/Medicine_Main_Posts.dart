@@ -18,47 +18,46 @@ class _MedicineMainPostsState extends State<MedicineMainPosts> {
   List<Posts> _newposts = [
     Posts(
       Auther: "Ziyad Hassan",
-      PostText: "Hi, I am Dr. Ziyad Hassan and here is my new medical tip",
-      Medincie: "Antinal",
+      PostText: "I need Minoxidil as soon as possible",
+      Medincie: "Minoxidil",
       Time: "24 min ago",
     ),
     Posts(
       Auther: "omar yacine",
-      PostText: "I dont know what to say",
+      PostText: "Could any one help me",
       Medincie: "Antinal",
       Time: "26 min ago",
     ),
     Posts(
       Auther: "AbdelHamid",
-      PostText: "Hi",
-      Medincie: "Antinal",
+      PostText: "I have 8 Tablets of this medicine if anyone need it",
+      Medincie: "Paracetamol",
       Time: "30 min ago",
     ),
     Posts(
-      Auther: "Ghareeb",
-      PostText: "A5oooooya",
-      Medincie: "Antinal",
+      Auther: "Hossam",
+      PostText: "Urgent please",
+      Medincie: "Ranitidine",
       Time: "1 hour ago",
     ),
     Posts(
       Auther: "Ghareeb",
-      PostText: "A5oooooya",
-      Medincie: "Antinal",
+      PostText: "I have excess of this medicine if anyone need it just call me",
+      Medincie: "Citalopram",
       Time: "1 hour ago",
     ),
-    Posts(
-      Auther: "Ghareeb",
-      PostText: "A5oooooya",
-      Medincie: "Antinal",
-      Time: "2 hours ago",
-    )
   ];
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        title: Text("Posts"),
+        backgroundColor: Color.fromRGBO(118, 0, 210, 1),
+      ),
       body: Column(
         children: [
+          // Container(height: 10,color: Colors.grey,),
           Expanded(
             child: ListView.builder(
                 itemCount: _newposts.length,
