@@ -1,16 +1,49 @@
-# Medicine :pill:
+# Pillarity :pill:
+### For sharing medical resources and Blood donation
 
-Medicine app is
+[![N|Solid](https://cldup.com/dTxpPi9lDf.thumb.png)](https://nodesource.com/products/nsolid)
 
-## Getting Started
+[![Build Status](https://travis-ci.org/joemccann/dillinger.svg?branch=master)](https://travis-ci.org/joemccann/dillinger)
 
-This project is a starting point for a Flutter application.
+## Describtion
+This a mobile application for sharing medical resources and Blood donation using flutter .
 
-A few resources to get you started if this is your first Flutter project:
+- Type some Markdown on the left
+- See HTML in the right
+- ✨Magic ✨
 
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
+## Features
 
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+- You can request medicine from other users
+- You can share medicine with others
+- You can contact with the 
+- Drag and drop markdown and HTML files into Dillinger
+
+## Tech
+
+Pillarity uses a number of open source projects to work properly:
+
+- [Flutter](https://flutter.dev/docs)  - Flutter for application interface
+- [Dart](https://dart.dev/guides) - Dart 
+- [FireBase](https://firebase.google.com/) - FireBase for Authentication and Database 
+- [Sqflite](https://pub.dev/packages/sqflite) - Sqflite for DataBase
+
+
+
+## Installation
+
+Pillarity requires [flutter](https://flutter.dev/docs) v2.1.0 to run.
+
+Install the dependencies and devDependencies and start the server.
+
+```sh
+C:\src>git clone https://github.com/flutter/flutter.git -b stable
+C:\src\flutter>flutter doctor
+```
+
+For production environments...
+
+```sh
+/path-to-flutter-sdk/bin/flutter
+/path-to-flutter-sdk/bin/dart
+```
