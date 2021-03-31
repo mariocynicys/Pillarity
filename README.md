@@ -15,26 +15,9 @@ The application also offers a way to donate blood, where users enter their blood
 
 ## Internals :arrow_down_small:
 
-![alt text](./readme_assets/login.jpg)
-### For sharing medical resources and Blood donation
+<img src="./readme_assets/login.jpg" alt="drawing" width="200"/>
 
-[![N|Solid](https://cldup.com/dTxpPi9lDf.thumb.png)](https://nodesource.com/products/nsolid)
 
-[![Build Status](https://travis-ci.org/joemccann/dillinger.svg?branch=master)](https://travis-ci.org/joemccann/dillinger)
-
-## Describtion
-This a mobile application for sharing medical resources and Blood donation using flutter .
-
-- Type some Markdown on the left
-- See HTML in the right
-- ✨Magic ✨
-
-## Features
-
-- You can request medicine from other users
-- You can share medicine with others
-- You can contact with the 
-- Drag and drop markdown and HTML files into Dillinger
 
 ## Tech
 
@@ -44,8 +27,6 @@ Pillarity uses a number of open source projects to work properly:
 - [Dart](https://dart.dev/guides) - Dart 
 - [FireBase](https://firebase.google.com/) - FireBase for Authentication and Database 
 - [Sqflite](https://pub.dev/packages/sqflite) - Sqflite for DataBase
-
-
 
 ## Installation
 
@@ -65,3 +46,4 @@ For production environments...
 /path-to-flutter-sdk/bin/dart
 ```
 ## License
+
