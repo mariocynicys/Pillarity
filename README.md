@@ -47,3 +47,4 @@ For production environments...
 /path-to-flutter-sdk/bin/flutter
 /path-to-flutter-sdk/bin/dart
 ```
+## License
