@@ -16,34 +16,51 @@ At each stage of the medicines' trip from the donor to the recipient, a bar-code
 The application also offers a way to donate blood, where users enter their blood type, age, sex, and location, based on this data, users get notified when others ask for blood donation near them, thus making a quicker impact.
 
 ## Internals :arrow_down_small:
+<div style="display:flex">
+<div>
 
 ### Login page:
 <img src="./readme_assets/login.jpg" alt="login" width="300"/>
 <hr>
+</div>
+<div>
 
 ### Registration page:
 <img src="./readme_assets/register.jpg" alt="registeration" width="300"/>
 <hr>
+</div>
+<div>
 
 ### Profile:
 <img src="./readme_assets/profile.jpg" alt="progile" width="300"/>
 <hr>
+</div>
+<div>
 
 ### Feed:
 <img src="./readme_assets/feed.jpg" alt="feed" width="300"/>
 <hr>
+</div>
+<div>
 
 ### Medicine Donation Post:
 <img src="./readme_assets/post_med_filled.jpg" width="300"/>
 <hr>
+</div>
+<div>
 
 ### Medicine Request:
 <img src="./readme_assets/req_med.jpg" width="300"/>
 <hr>
+</div>
+<div>
 
 ### Blood Request:
 <img src="./readme_assets/req_blood_filled.jpg" width="300"/>
 <hr>
+</div>
+</div>
+
 
 ## Tech :gear:
 
