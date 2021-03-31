@@ -38,7 +38,7 @@ The application also offers a way to donate blood, where users enter their blood
 <div>
 
 ### Feed:
-<img src="./readme_assets/feed.jpg" alt="feed" width="300"/>
+<img src="./readme_assets/feed.png" alt="feed" width="300"/>
 <hr>
 </div>
 <div>
