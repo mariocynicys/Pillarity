@@ -1,4 +1,4 @@
-<img src="./readme_assets/logo.jpg" alt="drawing" width="1000"/>
+<img src="./readme_assets/logo.jpg" alt="drawing" width="150"/>
 <hr>
 An application for medicine and blood donation
 
