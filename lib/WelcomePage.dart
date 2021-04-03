@@ -2,7 +2,7 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:medicine/Shared/SharedConstants.dart';
-import 'package:medicine/Sign/signup.dart';
+import 'package:medicine/Sign/RegisterPage.dart';
 
 import 'Sign/LoginPage.dart';
 
@@ -45,7 +45,7 @@ class _WelcomePageState extends State<WelcomePage> {
   //   );
   // }
 
-  Widget _submitButton() {
+  Widget _loginButton() {
     return InkWell(
       onTap: () {
         Navigator.push(
@@ -73,11 +73,11 @@ class _WelcomePageState extends State<WelcomePage> {
     );
   }
 
-  Widget _signUpButton() {
+  Widget _registerButton() {
     return InkWell(
       onTap: () {
         Navigator.push(
-            context, MaterialPageRoute(builder: (context) => SignUpPage()));
+            context, MaterialPageRoute(builder: (context) => RegisterPage()));
       },
       child: Container(
         width: MediaQuery.of(context).size.width,
@@ -132,9 +132,9 @@ class _WelcomePageState extends State<WelcomePage> {
             children: <Widget>[
                _title(),
               SizedBox(height: 30),
-              _submitButton(),
+              _loginButton(),
               SizedBox(height: 20),
-              _signUpButton(),
+              _registerButton(),
               SizedBox(height: 20),
             ],
           ),

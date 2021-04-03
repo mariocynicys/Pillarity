@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:medicine/Auth/auth.dart';
 import 'package:medicine/DataBase.dart';
-import 'package:medicine/Models/UserModel.dart';
 import 'package:medicine/Shared/SharedConstants.dart';
 import 'package:medicine/WelcomePage.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:toast/toast.dart';
 
 class Profile extends StatefulWidget {
@@ -13,11 +11,11 @@ class Profile extends StatefulWidget {
 }
 
 class _ProfileState extends State<Profile> {
-  String blood_type = "A+";
-  String name = "Ahmed Mohamed";
-  String phone_num = "01211202111";
-  String location = "Egypt";
-  String email = "Ahmed@gmail.com";
+  String name = "Error";
+  String blood_type = "Error";
+  String phone_num = "Error";
+  String location = "Error";
+  String email = "Error";
   List<Map<String, dynamic>> list;
 
   @override
@@ -27,13 +25,16 @@ class _ProfileState extends State<Profile> {
   }
 
   read() async {
-    list = await DataBaseHelper.instance.GetAllInfo();
-    if (list != null && list.length != 0) {
-      name = list[0][DataBaseHelper.instance.Name];
-      phone_num = list[0][DataBaseHelper.instance.Phone];
-      location = list[0][DataBaseHelper.instance.Loaction];
-      email = list[0][DataBaseHelper.instance.Email];
-    }
+    list = await DataBaseHelper.instance.getInfo();
+
+    if (list != null && list.length != 0)
+      setState(() {
+        name = list[0][DataBaseHelper().Name];
+        blood_type = list[0][DataBaseHelper().BloodType];
+        phone_num = list[0][DataBaseHelper().Phone];
+        location = list[0][DataBaseHelper().Loaction];
+        email = list[0][DataBaseHelper().Email];
+      });
   }
 
   @override
@@ -180,17 +181,15 @@ class _ProfileState extends State<Profile> {
               Align(
                 alignment: Alignment.bottomRight,
                 child: TextButton(
-                  onPressed: () {
-                    var result = AuthServices().SignOut();
+                  onPressed: ()async {
+                    var result = await AuthServices().SignOut();
                     if (result != null) {
-                      DataBaseHelper.instance.delete(0);
+                      DataBaseHelper.instance.deleteInfoTable();
                       Navigator.pushReplacement(
                           context,
                           MaterialPageRoute(
                               builder: (context) => WelcomePage()));
-                    } else
-                      Toast.show("Something Went Wrong", context,
-                          duration: Toast.LENGTH_LONG, gravity: Toast.BOTTOM);
+                    }
                   },
                   child: Container(
                     decoration: BoxDecoration(

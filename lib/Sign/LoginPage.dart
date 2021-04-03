@@ -1,11 +1,14 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
-import 'package:google_fonts/google_fonts.dart';
+import 'CheckVerification.dart';
 import 'package:medicine/Auth/auth.dart';
 import 'package:medicine/Bezier/bezierContainer.dart';
+import 'package:medicine/Database/FireStore.dart';
 import 'package:medicine/Medicine/MedicineMainPage.dart';
+import 'package:page_transition/page_transition.dart';
 import 'package:toast/toast.dart';
-import 'signup.dart';
+import '../DataBase.dart';
+import 'RegisterPage.dart';
 import '../Shared/SharedConstants.dart';
 import '../Shared/SharedWidgets.dart';
 import 'package:email_validator/email_validator.dart';
@@ -38,6 +41,7 @@ class _LoginPageState extends State<LoginPage> {
             height: 10,
           ),
           TextFormField(
+              autofillHints: [AutofillHints.email],
               onChanged: (String value) => email = value,
               validator: (String value) {
                 if (!EmailValidator.validate(value))
@@ -46,6 +50,10 @@ class _LoginPageState extends State<LoginPage> {
                   return null;
               },
               decoration: InputDecoration(
+                  prefixIcon: Icon(
+                    Icons.email,
+                    color: MedicineActiveColor,
+                  ),
                   border: InputBorder.none,
                   fillColor: Color(0xfff3f3f4),
                   filled: true))
@@ -68,6 +76,7 @@ class _LoginPageState extends State<LoginPage> {
             height: 10,
           ),
           TextFormField(
+              autofillHints: [AutofillHints.password],
               onChanged: (String value) => pass = value,
               validator: (String value) {
                 if (value.length < 8)
@@ -77,6 +86,10 @@ class _LoginPageState extends State<LoginPage> {
               },
               obscureText: true,
               decoration: InputDecoration(
+                  prefixIcon: Icon(
+                    Icons.vpn_key_outlined,
+                    color: MedicineActiveColor,
+                  ),
                   border: InputBorder.none,
                   fillColor: Color(0xfff3f3f4),
                   filled: true))
@@ -173,14 +186,12 @@ class _LoginPageState extends State<LoginPage> {
         width: 220,
         decoration: BoxDecoration(
           image: DecorationImage(
-              image: AssetImage('assets/InvertedLogo.png'),fit: BoxFit.cover),
+              image: AssetImage('assets/InvertedLogo.png'), fit: BoxFit.cover),
         ));
   }
 
   Widget _createAccountLabel() {
     return Container(
-      // margin: EdgeInsets.symmetric(vertical: 20),
-      // padding: EdgeInsets.all(15),
       alignment: Alignment.bottomCenter,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
@@ -195,7 +206,7 @@ class _LoginPageState extends State<LoginPage> {
           InkWell(
             onTap: () {
               Navigator.pushReplacement(context,
-                  MaterialPageRoute(builder: (context) => SignUpPage()));
+                  MaterialPageRoute(builder: (context) => RegisterPage()));
             },
             child: Text(
               'Register',
@@ -223,14 +234,52 @@ class _LoginPageState extends State<LoginPage> {
     return InkWell(
       onTap: () async {
         if (_Key.currentState.validate()) {
-          var result = await AuthServices().signWithEmailandpass(email, pass);
-          print(result);
-          if (result != null)
-            Navigator.pushReplacement(context,
-                MaterialPageRoute(builder: (context) => MedicineMainPage()));
-          else
-            Toast.show("Something Went Wrong", context,
-                duration: Toast.LENGTH_LONG, gravity: Toast.BOTTOM);
+          var result =
+              await AuthServices().signWithEmailandpass(email, pass, context);
+
+          if (result != null) {
+            if (await AuthServices().checkEmailVerification()) {
+              // if the user already Verified his email
+              DocumentSnapshot list =
+                  await FireStoreServices(uid: result.uid).getUserData();
+              var r2;
+
+              if (list.exists) {
+                setState(() {
+                  r2 = DataBaseHelper().insertIntoInfo({
+                    DataBaseHelper().Name:
+                        list.data()[FireStoreServices(uid: result.uid).Name],
+                    DataBaseHelper().Phone:
+                        list.data()[FireStoreServices(uid: result.uid).Phone],
+                    DataBaseHelper().Age:
+                        list.data()[FireStoreServices(uid: result.uid).Age],
+                    DataBaseHelper().Gender:
+                        list.data()[FireStoreServices(uid: result.uid).Gender],
+                    DataBaseHelper().Loaction: list
+                        .data()[FireStoreServices(uid: result.uid).Loaction],
+                    DataBaseHelper().Email:
+                        list.data()[FireStoreServices(uid: result.uid).Email],
+                    DataBaseHelper().BloodType: list
+                        .data()[FireStoreServices(uid: result.uid).BloodType]
+                  });
+                });
+              }
+
+              if (r2 != 0)
+                Navigator.pushReplacement(
+                    context,
+                    PageTransition(
+                        type: PageTransitionType.fade,
+                        child: MedicineMainPage(),
+                        duration: Duration(milliseconds: 1000)));
+            } else
+              Navigator.push(
+                  context,
+                  PageTransition(
+                      type: PageTransitionType.fade,
+                      child: VerificationPage(userUid: result.uid, email: email),
+                      duration: Duration(milliseconds: 1000)));
+          }
         }
       },
       child: Container(

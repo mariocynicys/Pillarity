@@ -9,6 +9,9 @@ class DataBaseHelper {
   final String infoTable = "Info";
   final String ID = "ID";
   final String Name = "Name";
+  final String Age = "Age";
+  final String BloodType = "BloodType";
+  final String Gender = "Gender";
   final String Phone = "Phone";
   final String Loaction = "Loaction";
   final String Email = "Email";
@@ -48,8 +51,10 @@ class DataBaseHelper {
   Future<void> _onCreate(Database db, int version) async {
     await db.execute('''
         CREATE TABLE $infoTable (
-        $ID Integer Primary Key Autoincrement,
         $Name TEXT,
+        $Age TEXT,
+        $BloodType TEXT,
+        $Gender TEXT,
         $Phone TEXT,
         $Loaction TEXT,
         $Email TEXT
@@ -62,20 +67,13 @@ class DataBaseHelper {
     return await db.insert(infoTable, row);
   }
 
-  Future<int> update(Map<String, dynamic> row) async {
-    // Database db = await this.database;
-    // int index = row["$columIndex"];
-    // return await db
-    //     .update(_tableName, row, where: '$columIndex = ?', whereArgs: [index]);
-  }
-
-  FutureOr<List<Map<String, dynamic>>> GetAllInfo() async {
+  FutureOr<List<Map<String, dynamic>>> getInfo() async {
     Database db = await this.database;
     List<Map<String, dynamic>> list = await db.query(infoTable);
     return list;
   }
 
-  Future<int> delete(int id) async {
+  Future<int> deleteInfoTable() async {
     Database db = await this.database;
     return db.delete(infoTable);
   }

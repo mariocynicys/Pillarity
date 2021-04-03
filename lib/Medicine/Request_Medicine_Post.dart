@@ -1,11 +1,15 @@
 import 'package:dropdown_search/dropdown_search.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 import 'package:intl/intl.dart';
+import 'package:medicine/Auth/auth.dart';
+import 'package:medicine/Database/FireStore.dart';
+import 'package:medicine/Medicine/MedicineMainPage.dart';
 import 'package:page_transition/page_transition.dart';
+import 'package:toast/toast.dart';
 
 import 'Add_Medicine_Library.dart';
-
 
 class RequestMedicinePost extends StatefulWidget {
   @override
@@ -13,8 +17,11 @@ class RequestMedicinePost extends StatefulWidget {
 }
 
 class _RequestMedicinePostState extends State<RequestMedicinePost> {
-  int con;
-  String date = "Expiration Date";
+  String medicine = "";
+  int concentration;
+  String neededQuantity = "";
+  String loc = "";
+  String notes = "";
 
   @override
   Widget build(BuildContext context) {
@@ -47,7 +54,7 @@ class _RequestMedicinePostState extends State<RequestMedicinePost> {
               // ),
               Padding(
                 padding:
-                const EdgeInsets.symmetric(horizontal: 8, vertical: 10),
+                    const EdgeInsets.symmetric(horizontal: 8, vertical: 10),
                 child: DropdownSearch(
                   dropdownSearchDecoration: InputDecoration(
                     border: UnderlineInputBorder(
@@ -61,16 +68,17 @@ class _RequestMedicinePostState extends State<RequestMedicinePost> {
                     hintStyle: TextStyle(
                         color: Color.fromRGBO(210, 135, 255, 1), fontSize: 27),
                   ),
-                  onChanged: (Object i) => print(1),
+                  onChanged: (Object i) =>
+                      setState(() => medicine = i.toString()),
                   dropDownButton: Container(
                     margin: EdgeInsets.only(right: 0, bottom: 5),
                     height: 20,
                     width: 20,
                     decoration: BoxDecoration(
                         image: DecorationImage(
-                          image: AssetImage("assets/MedicineDropDownIcon.png"),
-                          fit: BoxFit.contain,
-                        )),
+                      image: AssetImage("assets/MedicineDropDownIcon.png"),
+                      fit: BoxFit.contain,
+                    )),
                   ),
                   mode: Mode.MENU,
                   showSelectedItem: true,
@@ -105,8 +113,8 @@ class _RequestMedicinePostState extends State<RequestMedicinePost> {
                   color: Color.fromRGBO(252, 243, 255, 1),
                   child: DropdownButton<int>(
                       isExpanded: true,
-                      value: con,
-                      onChanged: (int i) => setState(() => con = i),
+                      value: concentration,
+                      onChanged: (int i) => setState(() => concentration = i),
                       style: TextStyle(
                           color: Color.fromRGBO(210, 135, 255, 1),
                           fontSize: 27),
@@ -117,11 +125,10 @@ class _RequestMedicinePostState extends State<RequestMedicinePost> {
                         width: 20,
                         decoration: BoxDecoration(
                             image: DecorationImage(
-                              image: AssetImage("assets/MedicineDropDownIcon.png"),
-                              fit: BoxFit.contain,
-                            )),
+                          image: AssetImage("assets/MedicineDropDownIcon.png"),
+                          fit: BoxFit.contain,
+                        )),
                       ),
-                      onTap: () => print("tabbed"),
                       elevation: 2,
                       hint: Padding(
                         padding: const EdgeInsets.only(left: 10),
@@ -136,7 +143,7 @@ class _RequestMedicinePostState extends State<RequestMedicinePost> {
                         DropdownMenuItem(
                             child: Text("100"),
                             value: 100,
-                            onTap: () => con = 100),
+                            onTap: () => concentration = 100),
                         DropdownMenuItem(child: Text("200"), value: 200),
                         DropdownMenuItem(child: Text("300"), value: 300)
                       ]),
@@ -177,6 +184,7 @@ class _RequestMedicinePostState extends State<RequestMedicinePost> {
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 1),
                 child: TextFormField(
+                  onChanged: (i) => neededQuantity = i,
                   style: TextStyle(
                       color: Color.fromRGBO(210, 135, 255, 1), fontSize: 30),
                   decoration: InputDecoration(
@@ -196,8 +204,9 @@ class _RequestMedicinePostState extends State<RequestMedicinePost> {
               ),
               Padding(
                 padding:
-                const EdgeInsets.symmetric(vertical: 4.0, horizontal: 10),
+                    const EdgeInsets.symmetric(vertical: 4.0, horizontal: 10),
                 child: TextFormField(
+                  onChanged: (i) => loc = i,
                   style: TextStyle(
                       color: Color.fromRGBO(210, 135, 255, 1), fontSize: 30),
                   decoration: InputDecoration(
@@ -217,6 +226,7 @@ class _RequestMedicinePostState extends State<RequestMedicinePost> {
               Padding(
                 padding: const EdgeInsets.only(right: 10, left: 13, top: 8),
                 child: TextFormField(
+                  onChanged: (i) => notes = i,
                   maxLines: null,
                   style: TextStyle(
                       color: Color.fromRGBO(210, 135, 255, 1), fontSize: 30),
@@ -228,45 +238,81 @@ class _RequestMedicinePostState extends State<RequestMedicinePost> {
                               style: BorderStyle.none,
                               width: 10,
                               color: Color.fromRGBO(154, 93, 255, 1))),
-                      hintText: "Notes",
+                      hintText: "Notes (Optional)",
                       hintStyle: TextStyle(
                           color: Color.fromRGBO(210, 135, 255, 1),
                           fontSize: 27)),
                 ),
               ),
               SizedBox(height: 15),
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Align(
-                  alignment: Alignment.centerRight,
-                  child: Container(
-                    height: 45,
-                    width: 130,
-                    decoration: BoxDecoration(
-                      color: Color.fromRGBO(118, 0, 210, 1),
-                      border: Border.all(),
-                      borderRadius: BorderRadius.all(Radius.circular(50)),
-                    ),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: [
-                        Container(
-                          height: 40,
-                          width: 40,
-                          decoration: BoxDecoration(
-                              image: DecorationImage(
-                                image: AssetImage("assets/Post Medicine Icon.png"),
-                                fit: BoxFit.contain,
-                              )),
-                        ),
-                        Text(
-                          "Post",
-                          style: TextStyle(
-                              fontSize: 23,
-                              color: Colors.white,
-                              fontWeight: FontWeight.w100),
-                        ),
-                      ],
+              InkWell(
+                onTap: () async {
+                  if (medicine == "") {
+                    Toast.show("Please Choose Medicine", context,
+                        duration: Toast.LENGTH_LONG, gravity: Toast.BOTTOM);
+                    return;
+                  }
+
+                  if (concentration == null)
+                    Toast.show("Please Choose Concentration", context,
+                        duration: Toast.LENGTH_LONG, gravity: Toast.BOTTOM);
+                  else {
+                    User user = await AuthServices().getUser();
+                    var result = await FireStoreServices(uid: user.uid)
+                        .AddRequestPost(medicine, concentration.toString(),
+                            neededQuantity, loc, notes);
+
+                    if (result == null)
+                      Toast.show("Cannot add Right now", context,
+                          duration: Toast.LENGTH_LONG, gravity: Toast.BOTTOM);
+                    else {
+
+                      Toast.show("Your Request is added Successfully ", context,
+                          duration: Toast.LENGTH_LONG, gravity: Toast.BOTTOM);
+
+                      Navigator.pushReplacement(
+                          context,
+                          PageTransition(
+                              type: PageTransitionType.fade,
+                              child: MedicineMainPage(),
+                              duration: Duration(milliseconds: 500)));
+                    }
+                  }
+                },
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Align(
+                    alignment: Alignment.centerRight,
+                    child: Container(
+                      height: 45,
+                      width: 130,
+                      decoration: BoxDecoration(
+                        color: Color.fromRGBO(118, 0, 210, 1),
+                        border: Border.all(),
+                        borderRadius: BorderRadius.all(Radius.circular(50)),
+                      ),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          Container(
+                            height: 40,
+                            width: 40,
+                            decoration: BoxDecoration(
+                                image: DecorationImage(
+                              image:
+                                  AssetImage("assets/Post Medicine Icon.png"),
+                              fit: BoxFit.contain,
+                            )),
+                          ),
+                          Text(
+                            "Post",
+                            style: TextStyle(
+                                fontSize: 23,
+                                color: Colors.white,
+                                fontWeight: FontWeight.w100),
+                          ),
+                        ],
+                      ),
                     ),
                   ),
                 ),
