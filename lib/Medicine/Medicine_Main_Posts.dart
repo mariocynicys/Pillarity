@@ -16,41 +16,8 @@ class MedicineMainPosts extends StatefulWidget {
 }
 
 class _MedicineMainPostsState extends State<MedicineMainPosts> {
-  List<Map<String,dynamic>> list = [];
+  List<Map<String, dynamic>> list = [];
   List<Posts> post = [];
-
-  // List<Posts> _newposts = [
-  //   Posts(
-  //     UserName: "Ziyad Hassan",
-  //     MedicineName: "I need Minoxidil as soon as possible",
-  //     Concentration: "Minoxidil",
-  //     Time: "24 min ago",
-  //   ),
-  //   Posts(
-  //     UserName: "omar yacine",
-  //     MedicineName: "Could any one help me",
-  //     Concentration: "Antinal",
-  //     Time: "26 min ago",
-  //   ),
-  //   Posts(
-  //     UserName: "AbdelHamid",
-  //     MedicineName: "I have 8 Tablets of this medicine if anyone need it",
-  //     Concentration: "Paracetamol",
-  //     Time: "30 min ago",
-  //   ),
-  //   Posts(
-  //     UserName: "Hossam",
-  //     MedicineName: "Urgent please",
-  //     Concentration: "Ranitidine",
-  //     Time: "1 hour ago",
-  //   ),
-  //   Posts(
-  //     UserName: "Ghareeb",
-  //     MedicineName: "I have excess of this medicine if anyone need it just call me",
-  //     Concentration: "Citalopram",
-  //     Time: "1 hour ago",
-  //   ),
-  // ];
 
   @override
   void initState() {
@@ -61,24 +28,21 @@ class _MedicineMainPostsState extends State<MedicineMainPosts> {
   read() async {
     list = await FireStoreServices(uid: "").getRequestPosts();
 
+    setState(() {
+      post = list.map(casting).toList();
+    });
+  }
 
-    print("List = " + list.toString());
-
-
-    // post = list.map((e) {
-    //
-    //  return Posts(
-    //       Concentration: e.data()["Concentration"],
-    //       UserName: e.data()["User Name"],
-    //       MedicineName: e.data()["Medicine Name"],
-    //       Notes: e.data()["Notes"],
-    //       PhoneNumber: e.data()["Phone Number"],
-    //       time: e.data()["Time"],
-    //       Location: e.data()["Location"],
-    //       NeededQuntity: e.data()["Needed Quantity"]);
-    //
-    // }
-    // )
+  Posts casting(Map<String, dynamic> e) {
+    return Posts(
+        Concentration: e["Concentration"],
+        UserName: e["User Name"],
+        MedicineName: e["Medicine Name"],
+        Notes: e["Notes"],
+        PhoneNumber: e["Phone Number"],
+        time: (e["Time"] as Timestamp).toDate(),
+        Location: e["Location"],
+        NeededQuntity: e["Needed Quantity"]);
   }
 
   @override
@@ -92,15 +56,15 @@ class _MedicineMainPostsState extends State<MedicineMainPosts> {
         onRefresh: () => read(),
         child: (post.length != 0)
             ? ListView.builder(
-            itemCount: post.length,
-            itemBuilder: (context, index) => post[index])
+                itemCount: post.length,
+                itemBuilder: (context, index) => post[index])
             : ListView(
-          children: [
-            Center(
-              child: Text("No Posts"),
-            ),
-          ],
-        ),
+                children: [
+                  Center(
+                    child: Text("No Posts"),
+                  ),
+                ],
+              ),
       ),
     );
   }

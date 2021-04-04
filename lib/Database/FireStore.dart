@@ -45,7 +45,9 @@ class FireStoreServices {
     List<Map<String, dynamic>> list = await DataBaseHelper.instance.getInfo();
     DateTime time = DateTime.now();
 
-    return await Posts.doc(uid).collection("RequestMedicinePosts").add({
+    return await Posts.add({
+      "UID": list[0][DataBaseHelper().UID],
+      "Type":"Request Medicine",
       "User Name": list[0][DataBaseHelper().Name],
       "Phone Number": list[0][DataBaseHelper().Phone],
       "Medicine Name": Medicine_Name,
@@ -59,7 +61,7 @@ class FireStoreServices {
 
   Future<List<Map<String,dynamic>>> getRequestPosts() async {
     QuerySnapshot data =
-        await Posts.get();
+        await Posts.orderBy("Time",descending: true).limit(2).get();
     return data.docs.map((doc) => doc.data()).toList();
   }
 }

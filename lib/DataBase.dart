@@ -7,7 +7,7 @@ class DataBaseHelper {
 
   // DataBase Of Medicines
   final String infoTable = "Info";
-  final String ID = "ID";
+  final String UID = "UID";
   final String Name = "Name";
   final String Age = "Age";
   final String BloodType = "BloodType";
@@ -51,6 +51,7 @@ class DataBaseHelper {
   Future<void> _onCreate(Database db, int version) async {
     await db.execute('''
         CREATE TABLE $infoTable (
+        $UID TEXT,
         $Name TEXT,
         $Age TEXT,
         $BloodType TEXT,

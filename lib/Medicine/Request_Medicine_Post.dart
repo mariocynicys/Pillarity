@@ -184,6 +184,7 @@ class _RequestMedicinePostState extends State<RequestMedicinePost> {
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 1),
                 child: TextFormField(
+                  keyboardType: TextInputType.number,
                   onChanged: (i) => neededQuantity = i,
                   style: TextStyle(
                       color: Color.fromRGBO(210, 135, 255, 1), fontSize: 30),
@@ -257,8 +258,8 @@ class _RequestMedicinePostState extends State<RequestMedicinePost> {
                     Toast.show("Please Choose Concentration", context,
                         duration: Toast.LENGTH_LONG, gravity: Toast.BOTTOM);
                   else {
-                    User user = await AuthServices().getUser();
-                    var result = await FireStoreServices(uid: user.uid)
+
+                    var result = await FireStoreServices(uid: "")
                         .AddRequestPost(medicine, concentration.toString(),
                             neededQuantity, loc, notes);
 

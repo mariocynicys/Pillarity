@@ -52,6 +52,7 @@ class _VerificationPageState extends State<VerificationPage> {
       if (list.exists) {
         setState(() {
           DataBaseHelper().insertIntoInfo({
+            DataBaseHelper().UID: widget.userUid,
             DataBaseHelper().Name:
                 list.data()[FireStoreServices(uid: widget.userUid).Name],
             DataBaseHelper().Phone:
@@ -105,14 +106,20 @@ class _VerificationPageState extends State<VerificationPage> {
             },
           ),
           SizedBox(height: 20),
-          Text("Please Verify Your Email",
-              style: TextStyle(color: BloodActiveColor, fontSize: 20)),
+          Center(
+            child: Text("Please Verify Your Email",
+                style: TextStyle(color: BloodActiveColor, fontSize: 20)),
+          ),
           SizedBox(height: 10),
-          Text("An Email has been send to ${widget.email}",
-              style: TextStyle(color: MedicineActiveColor, fontSize: 20)),
+          Center(
+            child: Text("An Email has been send to ${widget.email}",
+                style: TextStyle(color: MedicineActiveColor, fontSize: 20)),
+          ),
           SizedBox(height: 10),
-          Text("Cannot wait to help other ${Emojis.redHeart}",
-              style: TextStyle(color: BloodActiveColor, fontSize: 20)),
+          Center(
+            child: Text("Cannot wait to help other ${Emojis.redHeart}",
+                style: TextStyle(color: BloodActiveColor, fontSize: 20)),
+          ),
         ],
       ),
     );

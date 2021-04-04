@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -27,6 +29,34 @@ class Posts extends StatefulWidget {
 }
 
 class _PostsState extends State<Posts> {
+  String time = "";
+  Timer _timer;
+
+  @override
+  void initState() {
+    super.initState();
+
+    setState(() {
+      if (DateTime.now().difference(widget.time).inDays != 0) {
+        time = "${DateTime.now().difference(widget.time).inDays} Days ago";
+      } else if (DateTime.now().difference(widget.time).inHours != 0) {
+        time = "${DateTime.now().difference(widget.time).inHours} Hours ago";
+      } else {
+        time = "${DateTime.now().difference(widget.time).inMinutes} Min ago";
+      }
+    });
+  }
+
+
+  @override
+  void dispose() {
+    super.dispose();
+  }
+
+  updateTime() {
+
+  }
+
   @override
   Widget build(BuildContext context) {
     return Material(
@@ -46,7 +76,7 @@ class _PostsState extends State<Posts> {
             ListTile(
               title: Text("${widget.UserName}"),
               subtitle: Text("${widget.Concentration}"),
-              trailing: Text("${widget.time}"),
+              trailing: Text("${time}"),
               leading: CircleAvatar(
                 backgroundImage: AssetImage('assets/Profile.png'),
                 radius: 20.0,
@@ -64,7 +94,7 @@ class _PostsState extends State<Posts> {
             ),
             FlatButton(
               onPressed: () async {
-                launch(('tel://01202115813'));
+                launch(('tel://${widget.PhoneNumber}'));
               },
               child: Container(
                 padding: EdgeInsets.symmetric(horizontal: 15),

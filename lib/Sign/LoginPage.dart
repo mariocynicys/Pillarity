@@ -247,6 +247,7 @@ class _LoginPageState extends State<LoginPage> {
               if (list.exists) {
                 setState(() {
                   r2 = DataBaseHelper().insertIntoInfo({
+                    DataBaseHelper().UID: result.uid,
                     DataBaseHelper().Name:
                         list.data()[FireStoreServices(uid: result.uid).Name],
                     DataBaseHelper().Phone:
