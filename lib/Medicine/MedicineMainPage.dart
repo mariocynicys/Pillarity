@@ -2,9 +2,7 @@ import 'package:animated_bottom_navigation_bar/animated_bottom_navigation_bar.da
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:medicine/Blood/Request_Blood.dart';
-import 'package:medicine/Database/FireStore.dart';
 import 'package:medicine/Medicine/Add_Medicine_Post.dart';
 import 'package:medicine/Medicine/Request_Medicine_Post.dart';
 import 'package:medicine/Profile.dart';
@@ -259,66 +257,3 @@ class _MedicineMainPageState extends State<MedicineMainPage> {
   }
 }
 
-class DataSearch extends SearchDelegate<String> {
-  final cities = ["Cairo", "Alex", "Matrough", "masr", "ziyad", "Omar"];
-
-  @override
-  List<Widget> buildActions(BuildContext context) {
-    return [
-      IconButton(
-          icon: Icon(Icons.clear),
-          onPressed: () {
-            query = "";
-          })
-    ];
-  }
-
-  @override
-  Widget buildLeading(BuildContext context) {
-    return IconButton(
-        icon: AnimatedIcon(
-            icon: AnimatedIcons.menu_arrow, progress: transitionAnimation),
-        onPressed: () {
-          close(context, null);
-        });
-  }
-
-  @override
-  Widget buildResults(BuildContext context) {
-    // TODO: implement buildResults
-    throw UnimplementedError();
-  }
-
-  @override
-  Widget buildSuggestions(BuildContext context) {
-    // we should have list from his search history in the database
-    final seggestionlist = cities
-        .where(
-            (element) => element.toLowerCase().startsWith(query.toLowerCase()))
-        .toList();
-
-    return ListView.builder(
-      itemCount: seggestionlist.length,
-      itemBuilder: (context, index) => ListTile(
-        onTap: () {
-          // We should add the search result text to his history in the database
-          showResults(
-              context); // may be we don't need this function and go to MedicineResultPage immed
-        },
-        leading: FaIcon(FontAwesomeIcons.pills),
-        title: RichText(
-          text: TextSpan(
-              text: seggestionlist[index].substring(0, query.length),
-              style:
-                  TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
-              children: [
-                TextSpan(
-                  text: seggestionlist[index].substring(query.length),
-                  style: TextStyle(color: Colors.grey),
-                )
-              ]),
-        ),
-      ),
-    );
-  }
-}

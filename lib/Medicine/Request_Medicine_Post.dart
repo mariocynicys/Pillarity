@@ -1,9 +1,5 @@
 import 'package:dropdown_search/dropdown_search.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
-import 'package:intl/intl.dart';
-import 'package:medicine/Auth/auth.dart';
 import 'package:medicine/Database/FireStore.dart';
 import 'package:medicine/Medicine/MedicineMainPage.dart';
 import 'package:page_transition/page_transition.dart';

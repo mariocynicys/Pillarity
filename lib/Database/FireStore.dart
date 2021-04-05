@@ -1,7 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:medicine/Auth/auth.dart';
 
 import '../DataBase.dart';
 
@@ -41,13 +39,12 @@ class FireStoreServices {
 
   Future AddRequestPost(String Medicine_Name, String Concentration,
       String Needed_Quantity, String Location, String Notes) async {
-
     List<Map<String, dynamic>> list = await DataBaseHelper.instance.getInfo();
     DateTime time = DateTime.now();
 
     return await Posts.add({
       "UID": list[0][DataBaseHelper().UID],
-      "Type":"Request Medicine",
+      "Type": "Request Medicine",
       "User Name": list[0][DataBaseHelper().Name],
       "Phone Number": list[0][DataBaseHelper().Phone],
       "Medicine Name": Medicine_Name,
@@ -55,13 +52,30 @@ class FireStoreServices {
       "Needed Quantity": Needed_Quantity,
       "Location": Loaction,
       "Notes": Notes,
-      "Time" :time
+      "Time": time
     });
   }
 
-  Future<List<Map<String,dynamic>>> getRequestPosts() async {
+  Future<List<Map<String, dynamic>>> getRequestPosts() async {
     QuerySnapshot data =
-        await Posts.orderBy("Time",descending: true).limit(2).get();
+        await Posts.orderBy("Time", descending: true).limit(10).get();
+    return data.docs.map((doc) => doc.data()).toList();
+  }
+
+  Future<List<Map<String, dynamic>>> getMorePosts(
+      String lastUID, Timestamp time) async {
+    QuerySnapshot data = await Posts.orderBy("Time", descending: true)
+        .startAfter([time])
+        .limit(10)
+        .get();
+    return data.docs.map((doc) => doc.data()).toList();
+  }
+
+  Future<List<Map<String, dynamic>>> searchPosts(String med) async {
+    QuerySnapshot data = await Posts.orderBy("Time", descending: true)
+        // .where("Medicine Name", isEqualTo: med)
+        .limit(10)
+        .get();
     return data.docs.map((doc) => doc.data()).toList();
   }
 }

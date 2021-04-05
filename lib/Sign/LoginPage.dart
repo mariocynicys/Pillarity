@@ -1,12 +1,11 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:medicine/Database/FireStore.dart';
 import 'CheckVerification.dart';
 import 'package:medicine/Auth/auth.dart';
 import 'package:medicine/Bezier/bezierContainer.dart';
-import 'package:medicine/Database/FireStore.dart';
 import 'package:medicine/Medicine/MedicineMainPage.dart';
 import 'package:page_transition/page_transition.dart';
-import 'package:toast/toast.dart';
 import '../DataBase.dart';
 import 'RegisterPage.dart';
 import '../Shared/SharedConstants.dart';
