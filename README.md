@@ -1,8 +1,9 @@
 <img src="./readme_assets/logo.jpg" alt="logo" width="1000"/>
 <hr>
-# Pillarity :pill:
 
-An application for medicine and blood donation
+## Pillarity :pill:
+
+An application for Medicine and Blood donation
 
 ## Description :shipit:
 
