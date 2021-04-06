@@ -1,4 +1,9 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
+import 'package:medicine/Database/FireStore.dart';
+import 'package:medicine/Medicine/MedicineMainPage.dart';
+import 'package:page_transition/page_transition.dart';
+import 'package:toast/toast.dart';
 
 class RequestBlood extends StatefulWidget {
   @override
@@ -6,15 +11,17 @@ class RequestBlood extends StatefulWidget {
 }
 
 class _RequestBloodState extends State<RequestBlood> {
-  String con;
-  String type;
+  String Quantity = "0.5 Litre";
+  String type = "A+";
+  String loc = "";
+  String Notes = "";
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
           backgroundColor: Color.fromRGBO(188, 0, 113, 1),
-          title: Text("Request Blood"),
+          title: AutoSizeText("Request Blood"),
         ),
         body: SingleChildScrollView(
           child: Column(
@@ -25,8 +32,8 @@ class _RequestBloodState extends State<RequestBlood> {
                   color: Color.fromRGBO(252, 244, 248, 1),
                   child: DropdownButton<String>(
                       isExpanded: true,
-                      value: con,
-                      onChanged: (String i) => setState(() => con = i),
+                      value: Quantity,
+                      onChanged: (String i) => setState(() => Quantity = i),
                       style: TextStyle(
                           color: Color.fromRGBO(255, 133, 155, 1),
                           fontSize: 27),
@@ -41,11 +48,10 @@ class _RequestBloodState extends State<RequestBlood> {
                           fit: BoxFit.contain,
                         )),
                       ),
-                      onTap: () => print("tabbed"),
                       elevation: 2,
                       hint: Padding(
                         padding: const EdgeInsets.only(left: 10),
-                        child: Text(
+                        child: AutoSizeText(
                           "Needed Quantity",
                           style: TextStyle(
                               color: Color.fromRGBO(255, 133, 155, 1),
@@ -54,24 +60,25 @@ class _RequestBloodState extends State<RequestBlood> {
                       ),
                       items: [
                         DropdownMenuItem(
-                            child: Text("0.1 Litre"), value: "100"),
+                            child: AutoSizeText("0.1 Litre"), value: "0.1 Litre"),
                         DropdownMenuItem(
-                            child: Text("0.2 Litre"), value: "200"),
+                            child: AutoSizeText("0.2 Litre"), value: "0.2 Litre"),
                         DropdownMenuItem(
-                            child: Text("0.3 Litre"), value: "300"),
+                            child: AutoSizeText("0.3 Litre"), value: "0.3 Litre"),
                         DropdownMenuItem(
-                            child: Text("0.4 Litre"), value: "400"),
+                            child: AutoSizeText("0.4 Litre"), value: "0.4 Litre"),
                         DropdownMenuItem(
-                            child: Text("0.5 Litre"), value: "500"),
+                            child: AutoSizeText("0.5 Litre"), value: "0.5 Litre"),
                         DropdownMenuItem(
-                            child: Text("0.6 Litre"), value: "600"),
+                            child: AutoSizeText("0.6 Litre"), value: "0.6 Litre"),
                         DropdownMenuItem(
-                            child: Text("0.7 Litre"), value: "700"),
+                            child: AutoSizeText("0.7 Litre"), value: "0.7 Litre"),
                         DropdownMenuItem(
-                            child: Text("0.8 Litre"), value: "800"),
+                            child: AutoSizeText("0.8 Litre"), value: "0.8 Litre"),
                         DropdownMenuItem(
-                            child: Text("0.9 Litre"), value: "900"),
-                        DropdownMenuItem(child: Text("1 Litre"), value: "1000"),
+                            child: AutoSizeText("0.9 Litre"), value: "0.9 Litre"),
+                        DropdownMenuItem(
+                            child: AutoSizeText("1 Litre"), value: "1 Litre"),
                       ]),
                 ),
               ),
@@ -101,7 +108,7 @@ class _RequestBloodState extends State<RequestBlood> {
                       elevation: 2,
                       hint: Padding(
                         padding: const EdgeInsets.only(left: 10),
-                        child: Text(
+                        child: AutoSizeText(
                           "Blood Type",
                           style: TextStyle(
                               color: Color.fromRGBO(255, 133, 155, 1),
@@ -109,20 +116,21 @@ class _RequestBloodState extends State<RequestBlood> {
                         ),
                       ),
                       items: [
-                        DropdownMenuItem(child: Text("A-"), value: "A-"),
-                        DropdownMenuItem(child: Text("A+"), value: "A+"),
-                        DropdownMenuItem(child: Text("B-"), value: "B-"),
-                        DropdownMenuItem(child: Text("B+"), value: "B+"),
-                        DropdownMenuItem(child: Text("AB-"), value: "AB-"),
-                        DropdownMenuItem(child: Text("AB+"), value: "AB+"),
-                        DropdownMenuItem(child: Text("O-"), value: "O-"),
-                        DropdownMenuItem(child: Text("O+"), value: "O+"),
+                        DropdownMenuItem(child: AutoSizeText("A-"), value: "A-"),
+                        DropdownMenuItem(child: AutoSizeText("A+"), value: "A+"),
+                        DropdownMenuItem(child: AutoSizeText("B-"), value: "B-"),
+                        DropdownMenuItem(child: AutoSizeText("B+"), value: "B+"),
+                        DropdownMenuItem(child: AutoSizeText("AB-"), value: "AB-"),
+                        DropdownMenuItem(child: AutoSizeText("AB+"), value: "AB+"),
+                        DropdownMenuItem(child: AutoSizeText("O-"), value: "O-"),
+                        DropdownMenuItem(child: AutoSizeText("O+"), value: "O+"),
                       ]),
                 ),
               ),
               Padding(
                 padding: const EdgeInsets.only(right: 10, left: 10, top: 8),
                 child: TextFormField(
+                  onChanged: (String i) => setState(() => loc = i),
                   style: TextStyle(
                       color: Color.fromRGBO(255, 133, 155, 1), fontSize: 30),
                   decoration: InputDecoration(
@@ -142,6 +150,7 @@ class _RequestBloodState extends State<RequestBlood> {
               Padding(
                 padding: const EdgeInsets.only(right: 10, left: 13, top: 8),
                 child: TextFormField(
+                  onChanged: (String i) => setState(() => Notes = i),
                   maxLines: null,
                   style: TextStyle(
                       color: Color.fromRGBO(255, 133, 155, 1), fontSize: 30),
@@ -160,42 +169,66 @@ class _RequestBloodState extends State<RequestBlood> {
                 ),
               ),
               SizedBox(height: 15),
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Align(
-                  alignment: Alignment.centerRight,
-                  child: Container(
-                    height: 45,
-                    width: 130,
-                    decoration: BoxDecoration(
-                      color: Color.fromRGBO(188, 0, 113, 1),
-                      border: Border.all(),
-                      borderRadius: BorderRadius.all(Radius.circular(50)),
-                    ),
-                    child: Row(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: [
-                        Container(
-                          height: 35,
-                          width: 40,
-                          decoration: BoxDecoration(
-                              image: DecorationImage(
-                            image: AssetImage("assets/Post Blood Icon.png"),
-                            fit: BoxFit.contain,
-                          )),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.only(top: 6),
-                          child: Text(
-                            "Post",
-                            style: TextStyle(
-                                fontSize: 23,
-                                color: Colors.white,
-                                fontWeight: FontWeight.w100),
+              InkWell(
+                onTap: () async {
+                  print(loc);
+                    var result = await FireStoreServices(uid: "")
+                        .AddBloodPost(type, Quantity, loc, Notes);
+
+                    if (result == null)
+                      Toast.show("Cannot add Right now", context,
+                          duration: Toast.LENGTH_LONG, gravity: Toast.BOTTOM);
+                    else {
+
+                      Toast.show("Your Request is added Successfully ", context,
+                          duration: Toast.LENGTH_LONG, gravity: Toast.BOTTOM);
+
+                      Navigator.pushReplacement(
+                          context,
+                          PageTransition(
+                              type: PageTransitionType.fade,
+                              child: MedicineMainPage(),
+                              duration: Duration(milliseconds: 500)));
+                    }
+
+                },
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Align(
+                    alignment: Alignment.centerRight,
+                    child: Container(
+                      height: 45,
+                      width: 130,
+                      decoration: BoxDecoration(
+                        color: Color.fromRGBO(188, 0, 113, 1),
+                        border: Border.all(),
+                        borderRadius: BorderRadius.all(Radius.circular(50)),
+                      ),
+                      child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          Container(
+                            height: 35,
+                            width: 40,
+                            decoration: BoxDecoration(
+                                image: DecorationImage(
+                              image: AssetImage("assets/Post Blood Icon.png"),
+                              fit: BoxFit.contain,
+                            )),
                           ),
-                        ),
-                      ],
+                          Padding(
+                            padding: const EdgeInsets.only(top: 6),
+                            child: AutoSizeText(
+                              "Post",
+                              style: TextStyle(
+                                  fontSize: 23,
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.w100),
+                            ),
+                          ),
+                        ],
+                      ),
                     ),
                   ),
                 ),

@@ -52,6 +52,7 @@ dependencies:
   email_validator: ^2.0.1
   toast: ^0.1.5
   emojis: ^0.9.3
+  auto_size_text: ^2.1.0
 
 
 dev_dependencies:

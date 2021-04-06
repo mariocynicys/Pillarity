@@ -10,7 +10,7 @@ class FireStoreServices {
   String BloodType = "BloodType";
   String Gender = "Gender";
   String Phone = "Phone";
-  String Loaction = "Loaction";
+  String Loaction = "Location";
   String Email = "Email";
 
   FireStoreServices({@required this.uid});
@@ -38,7 +38,7 @@ class FireStoreServices {
   }
 
   Future AddRequestPost(String Medicine_Name, String Concentration,
-      String Needed_Quantity, String Location, String Notes) async {
+      String Needed_Quantity, String Loc, String notes) async {
     List<Map<String, dynamic>> list = await DataBaseHelper.instance.getInfo();
     DateTime time = DateTime.now();
 
@@ -47,16 +47,64 @@ class FireStoreServices {
       "Type": "Request Medicine",
       "User Name": list[0][DataBaseHelper().Name],
       "Phone Number": list[0][DataBaseHelper().Phone],
-      "Medicine Name": Medicine_Name,
+      "Medicine Name": Medicine_Name.toLowerCase(),
       "Concentration": Concentration,
       "Needed Quantity": Needed_Quantity,
-      "Location": Loaction,
-      "Notes": Notes,
+      "Location": Loc,
+      "Notes": notes,
       "Time": time
     });
   }
 
-  Future<List<Map<String, dynamic>>> getRequestPosts() async {
+  Future AddGivingPost(
+      String Medicine_Name,
+      String Concentration,
+      String Quantity,
+      String Loc,
+      String notes,
+      DateTime ExpirationDate) async {
+
+    List<Map<String, dynamic>> list = await DataBaseHelper.instance.getInfo();
+    DateTime time = DateTime.now();
+
+    return await Posts.add({
+      "UID": list[0][DataBaseHelper().UID],
+      "Type": "Giving Medicine",
+      "User Name": list[0][DataBaseHelper().Name],
+      "Phone Number": list[0][DataBaseHelper().Phone],
+      "Medicine Name": Medicine_Name.toLowerCase(),
+      "Concentration": Concentration,
+      "Quantity": Quantity,
+      "Expiration Date": ExpirationDate,
+      "Location": Loc,
+      "Notes": notes,
+      "Time": time
+    });
+  }
+
+  Future AddBloodPost(
+      String BloodType,
+      String Quantity,
+      String Loc,
+      String notes,) async {
+
+    List<Map<String, dynamic>> list = await DataBaseHelper.instance.getInfo();
+    DateTime time = DateTime.now();
+
+    return await Posts.add({
+      "UID": list[0][DataBaseHelper().UID],
+      "Type": "Blood Donation",
+      "User Name": list[0][DataBaseHelper().Name],
+      "Phone Number": list[0][DataBaseHelper().Phone],
+      "Quantity": Quantity,
+      "Blood Type": BloodType.toLowerCase(),
+      "Location": Loc,
+      "Notes": notes,
+      "Time": time
+    });
+  }
+
+  Future<List<Map<String, dynamic>>> getPosts() async {
     QuerySnapshot data =
         await Posts.orderBy("Time", descending: true).limit(10).get();
     return data.docs.map((doc) => doc.data()).toList();
@@ -73,7 +121,16 @@ class FireStoreServices {
 
   Future<List<Map<String, dynamic>>> searchPosts(String med) async {
     QuerySnapshot data = await Posts.orderBy("Time", descending: true)
-        // .where("Medicine Name", isEqualTo: med)
+        .where("Medicine Name", isEqualTo: med)
+        .limit(10)
+        .get();
+    return data.docs.map((doc) => doc.data()).toList();
+  }
+
+  Future<List<Map<String, dynamic>>> getMoreSearchPosts(String med,Timestamp time) async {
+    QuerySnapshot data = await Posts.orderBy("Time", descending: true)
+        .where("Medicine Name", isEqualTo: med)
+        .startAfter([time])
         .limit(10)
         .get();
     return data.docs.map((doc) => doc.data()).toList();

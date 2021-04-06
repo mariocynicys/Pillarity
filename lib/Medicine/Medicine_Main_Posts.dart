@@ -4,6 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:medicine/Database/FireStore.dart';
+import 'package:medicine/Shared/SharedConstants.dart';
 import 'package:page_transition/page_transition.dart';
 
 import 'Post.dart';
@@ -43,11 +44,12 @@ class _MedicineMainPostsState extends State<MedicineMainPosts> {
   getPosts() async {
     setState(() => gettingPosts = true);
 
-    list = await FireStoreServices(uid: "").getRequestPosts();
+    list = await FireStoreServices(uid: "").getPosts();
 
-    if (list.length < 10) setState(() => noMorePosts = true);
-    else setState(() => noMorePosts = false);
-
+    if (list.length < 10)
+      setState(() => noMorePosts = true);
+    else
+      setState(() => noMorePosts = false);
 
     setState(() {
       post = list.map(casting).toList();
@@ -55,14 +57,18 @@ class _MedicineMainPostsState extends State<MedicineMainPosts> {
 
       // Adding Temp post for last object The Text
       post.add(Posts(
-          Concentration: "Concentration",
-          UserName: "UserName",
-          MedicineName: "MedicineName",
-          Notes: "Notes",
-          PhoneNumber: "PhoneNumber",
-          time: DateTime(1),
-          Location: "Location",
-          NeededQuntity: "NeededQuntity"));
+        Concentration: "Concentration",
+        UserName: "UserName",
+        MedicineName: "MedicineName",
+        Notes: "Notes",
+        PhoneNumber: "PhoneNumber",
+        PostTime: DateTime(1),
+        Type: "Type",
+        Location: "Location",
+        NeededQuntity: "NeededQuntity",
+        BloodType: '',
+        ExpirationDate: DateTime(1),
+      ));
     });
   }
 
@@ -72,8 +78,10 @@ class _MedicineMainPostsState extends State<MedicineMainPosts> {
 
     list = await FireStoreServices(uid: "").getMorePosts(lastUID, lastPostTime);
 
-    if (list.length < 10) setState(() => noMorePosts = true);
-    else setState(() => noMorePosts = false);
+    if (list.length < 10)
+      setState(() => noMorePosts = true);
+    else
+      setState(() => noMorePosts = false);
 
     setState(() {
       post.removeAt(post.length - 1);
@@ -81,14 +89,18 @@ class _MedicineMainPostsState extends State<MedicineMainPosts> {
 
       // Adding Temp post for last object The Text
       post.add(Posts(
-          Concentration: "Concentration",
-          UserName: "UserName",
-          MedicineName: "MedicineName",
-          Notes: "Notes",
-          PhoneNumber: "PhoneNumber",
-          time: DateTime(1),
-          Location: "Location",
-          NeededQuntity: "NeededQuntity"));
+        Concentration: "Concentration",
+        UserName: "UserName",
+        MedicineName: "MedicineName",
+        Notes: "Notes",
+        PhoneNumber: "PhoneNumber",
+        PostTime: DateTime(1),
+        Location: "Location",
+        NeededQuntity: "NeededQuntity",
+        Type: "",
+        ExpirationDate: DateTime(1),
+        BloodType: '',
+      ));
       gettingPosts = false;
     });
   }
@@ -96,15 +108,48 @@ class _MedicineMainPostsState extends State<MedicineMainPosts> {
   Posts casting(Map<String, dynamic> e) {
     lastUID = e["UID"];
     lastPostTime = e["Time"];
-    return Posts(
+    if (e["Type"] == "Request Medicine")
+      return Posts(
         Concentration: e["Concentration"],
         UserName: e["User Name"],
         MedicineName: e["Medicine Name"],
         Notes: e["Notes"],
         PhoneNumber: e["Phone Number"],
-        time: (e["Time"] as Timestamp).toDate(),
+        PostTime: (e["Time"] as Timestamp).toDate(),
+        Type: e["Type"],
         Location: e["Location"],
-        NeededQuntity: e["Needed Quantity"]);
+        NeededQuntity: e["Needed Quantity"],
+        ExpirationDate: DateTime(1),
+        BloodType: "",
+      );
+    else if (e["Type"] == "Giving Medicine")
+      return Posts(
+        Concentration: e["Concentration"],
+        UserName: e["User Name"],
+        MedicineName: e["Medicine Name"],
+        Notes: e["Notes"],
+        PhoneNumber: e["Phone Number"],
+        PostTime: (e["Time"] as Timestamp).toDate(),
+        Type: e["Type"],
+        Location: e["Location"],
+        NeededQuntity: e["Quantity"],
+        BloodType: '',
+        ExpirationDate: (e["Expiration Date"] as Timestamp).toDate(),
+      );
+    else
+      return Posts(
+        Concentration: "",
+        UserName: e["User Name"],
+        MedicineName: "",
+        Notes: e["Notes"],
+        PhoneNumber: e["Phone Number"],
+        PostTime: (e["Time"] as Timestamp).toDate(),
+        Type: e["Type"],
+        Location: e["Location"],
+        NeededQuntity: e["Quantity"],
+        BloodType: e["Blood Type"],
+        ExpirationDate: DateTime(1),
+      );
   }
 
   @override
@@ -165,16 +210,6 @@ class _MedicineMainPostsState extends State<MedicineMainPosts> {
 }
 
 class DataSearch extends SearchDelegate<String> {
-  final Medicines = [
-    "OMEPRAZOLE",
-    "IBUPROFEN",
-    "Aspirin",
-    "Diclofenac",
-    "Minoxidil",
-    "Paracetamol",
-    "Ranitidine",
-    "Citalopram",
-  ];
 
   @override
   List<Widget> buildActions(BuildContext context) {
@@ -192,25 +227,19 @@ class DataSearch extends SearchDelegate<String> {
     return IconButton(
         icon: AnimatedIcon(
             icon: AnimatedIcons.menu_arrow, progress: transitionAnimation),
-        onPressed: () =>  close(context, null));
+        onPressed: () => close(context, null));
   }
 
   @override
   Widget buildResults(BuildContext context) {
-    close(context, query);
-    Navigator.push(
-        context,
-        PageTransition(
-            type: PageTransitionType.fade,
-            child: SearchPage(medName: query),
-            duration: Duration(milliseconds: 1000)));
+    close(context, "");
     return null;
   }
 
   @override
   Widget buildSuggestions(BuildContext context) {
     // we should have list from his search history in the database
-    final suggestions = Medicines.where(
+    final suggestions = MedicinesArray.where(
             (element) => element.toLowerCase().startsWith(query.toLowerCase()))
         .toList();
 
@@ -218,11 +247,10 @@ class DataSearch extends SearchDelegate<String> {
       itemCount: suggestions.length,
       itemBuilder: (context, index) => ListTile(
         onTap: () {
-          close(context, null);
+          // close(context, null);
           // We should add the search result text to his history in the database
           // may be we don't need this function and go to MedicineResultPage
-
-          query = suggestions[index];
+          query = suggestions[index].toLowerCase();
 
           Navigator.push(
               context,

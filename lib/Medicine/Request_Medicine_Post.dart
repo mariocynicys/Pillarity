@@ -2,6 +2,7 @@ import 'package:dropdown_search/dropdown_search.dart';
 import 'package:flutter/material.dart';
 import 'package:medicine/Database/FireStore.dart';
 import 'package:medicine/Medicine/MedicineMainPage.dart';
+import 'package:medicine/Shared/SharedConstants.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:toast/toast.dart';
 
@@ -91,16 +92,7 @@ class _RequestMedicinePostState extends State<RequestMedicinePost> {
                       hintStyle: TextStyle(
                           color: Color.fromRGBO(210, 135, 255, 1),
                           fontSize: 15)),
-                  items: [
-                    "OMEPRAZOLE",
-                    "IBUPROFEN",
-                    "Aspirin",
-                    "Diclofenac",
-                    "Minoxidil",
-                    "Paracetamol",
-                    "Ranitidine",
-                    "Citalopram",
-                  ],
+                  items: MedicinesArray,
                 ),
               ),
               Padding(
@@ -181,7 +173,7 @@ class _RequestMedicinePostState extends State<RequestMedicinePost> {
                 padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 1),
                 child: TextFormField(
                   keyboardType: TextInputType.number,
-                  onChanged: (i) => neededQuantity = i,
+                  onChanged: (i) => setState(() => neededQuantity = i),
                   style: TextStyle(
                       color: Color.fromRGBO(210, 135, 255, 1), fontSize: 30),
                   decoration: InputDecoration(
@@ -203,7 +195,7 @@ class _RequestMedicinePostState extends State<RequestMedicinePost> {
                 padding:
                     const EdgeInsets.symmetric(vertical: 4.0, horizontal: 10),
                 child: TextFormField(
-                  onChanged: (i) => loc = i,
+                  onChanged: (i) => setState(() => loc = i),
                   style: TextStyle(
                       color: Color.fromRGBO(210, 135, 255, 1), fontSize: 30),
                   decoration: InputDecoration(
@@ -223,7 +215,7 @@ class _RequestMedicinePostState extends State<RequestMedicinePost> {
               Padding(
                 padding: const EdgeInsets.only(right: 10, left: 13, top: 8),
                 child: TextFormField(
-                  onChanged: (i) => notes = i,
+                  onChanged: (i) => setState(() => notes = i),
                   maxLines: null,
                   style: TextStyle(
                       color: Color.fromRGBO(210, 135, 255, 1), fontSize: 30),

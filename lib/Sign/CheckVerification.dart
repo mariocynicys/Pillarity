@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:emojis/emojis.dart'; // to use Emoji collection
 import 'package:emojis/emoji.dart'; // to use Emoji utilities
@@ -107,17 +108,17 @@ class _VerificationPageState extends State<VerificationPage> {
           ),
           SizedBox(height: 20),
           Center(
-            child: Text("Please Verify Your Email",
+            child: AutoSizeText("Please Verify Your Email",
                 style: TextStyle(color: BloodActiveColor, fontSize: 20)),
           ),
           SizedBox(height: 10),
           Center(
-            child: Text("An Email has been send to ${widget.email}",
+            child: AutoSizeText("An Email has been send to ${widget.email}",
                 style: TextStyle(color: MedicineActiveColor, fontSize: 20)),
           ),
           SizedBox(height: 10),
           Center(
-            child: Text("Cannot wait to help other ${Emojis.redHeart}",
+            child: AutoSizeText("Cannot wait to help other ${Emojis.redHeart}",
                 style: TextStyle(color: BloodActiveColor, fontSize: 20)),
           ),
         ],

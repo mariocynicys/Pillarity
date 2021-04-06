@@ -1,3 +1,4 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:medicine/Auth/auth.dart';
 import 'package:medicine/DataBase.dart';
@@ -42,7 +43,7 @@ class _ProfileState extends State<Profile> {
     return Scaffold(
       backgroundColor: Colors.grey[100],
       appBar: AppBar(
-        title: Text('Profile'),
+        title: AutoSizeText('Profile'),
         backgroundColor: Color.fromRGBO(118, 0, 210, 1),
         elevation: 0.0,
       ),
@@ -60,7 +61,7 @@ class _ProfileState extends State<Profile> {
               ),
               SizedBox(height: 10.0),
               Center(
-                child: Text(
+                child: AutoSizeText(
                   '$name',
                   style: TextStyle(
                     color: Color.fromRGBO(154, 93, 255, 1.0),
@@ -76,7 +77,7 @@ class _ProfileState extends State<Profile> {
                 color: Color.fromRGBO(154, 93, 255, 1.0),
               ),
               //SizedBox(height: 10.0),
-              Text(
+              AutoSizeText(
                 'NAME',
                 style: TextStyle(
                   color: Color.fromRGBO(154, 93, 255, 1.0),
@@ -85,7 +86,7 @@ class _ProfileState extends State<Profile> {
                 ),
               ),
               SizedBox(height: 5.0),
-              Text(
+              AutoSizeText(
                 '$name',
                 style: TextStyle(
                   color: Colors.grey,
@@ -95,7 +96,7 @@ class _ProfileState extends State<Profile> {
                 ),
               ),
               SizedBox(height: 10.0),
-              Text(
+              AutoSizeText(
                 'Blood Type',
                 style: TextStyle(
                   fontSize: 21.0,
@@ -104,7 +105,7 @@ class _ProfileState extends State<Profile> {
                 ),
               ),
               SizedBox(height: 5.0),
-              Text(
+              AutoSizeText(
                 '$blood_type',
                 style: TextStyle(
                   color: Colors.grey,
@@ -114,7 +115,7 @@ class _ProfileState extends State<Profile> {
               ),
 
               SizedBox(height: 15.0),
-              Text(
+              AutoSizeText(
                 'Phone Number :',
                 style: TextStyle(
                   color: Color.fromRGBO(154, 93, 255, 1.0),
@@ -123,7 +124,7 @@ class _ProfileState extends State<Profile> {
                 ),
               ),
               SizedBox(height: 5.0),
-              Text(
+              AutoSizeText(
                 '$phone_num',
                 style: TextStyle(
                   color: Colors.grey,
@@ -132,7 +133,7 @@ class _ProfileState extends State<Profile> {
                 ),
               ),
               SizedBox(height: 15.0),
-              Text(
+              AutoSizeText(
                 'location :',
                 style: TextStyle(
                   color: Color.fromRGBO(154, 93, 255, 1.0),
@@ -141,7 +142,7 @@ class _ProfileState extends State<Profile> {
                 ),
               ),
               SizedBox(height: 5.0),
-              Text(
+              AutoSizeText(
                 '$location',
                 style: TextStyle(
                   color: Colors.grey,
@@ -152,7 +153,7 @@ class _ProfileState extends State<Profile> {
               SizedBox(height: 15.0),
               //mainAxisAlignment: MainAxisAlignment.spaceBetween,
 
-              Text(
+              AutoSizeText(
                 'Email :',
                 style: TextStyle(
                   color: Color.fromRGBO(154, 93, 255, 1.0),
@@ -167,7 +168,7 @@ class _ProfileState extends State<Profile> {
                   color: Colors.grey[400],
                 ),
                 SizedBox(height: 10.0),
-                Text(
+                AutoSizeText(
                   email,
                   style: TextStyle(
                       color: Colors.grey[400],
@@ -200,7 +201,7 @@ class _ProfileState extends State<Profile> {
                     height: 50,
                     width: 120,
                     child: Center(
-                        child: Text(
+                        child: AutoSizeText(
                       "Logout",
                       style: TextStyle(color: Colors.white, fontSize: 20),
                     )),
@@ -210,38 +211,6 @@ class _ProfileState extends State<Profile> {
               SizedBox(height: 50.0),
             ],
           ),
-          // Row(
-          //   children: [
-          //     Padding(
-          //       padding: const EdgeInsets.fromLTRB(0.0, 20.0, 0.0, 20.0),
-          //       child: RaisedButton(
-          //         onPressed: () {},
-          //         textColor: Colors.amber,
-          //         color: Colors.redAccent,
-          //         child: Text('reset'),
-          //       ),
-          //     )
-          //   ],
-          // )
-          // SizedBox(height: 40.0),
-          // Row(
-          //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          //   crossAxisAlignment: CrossAxisAlignment.end,
-          //   children: [
-          //     CircleAvatar(
-          //       backgroundImage: AssetImage('assets/bat.png'),
-          //       radius: 20.0,
-          //     ),
-          //     CircleAvatar(
-          //       backgroundImage: AssetImage('assets/bat.png'),
-          //       radius: 20.0,
-          //     ),
-          //     CircleAvatar(
-          //       backgroundImage: AssetImage('assets/bat.png'),
-          //       radius: 20.0,
-          //     ),
-          //   ],
-          // )
         ),
       ),
     );
