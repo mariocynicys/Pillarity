@@ -22,17 +22,17 @@ class Posts extends StatefulWidget {
 
   Posts(
       {@required this.Concentration,
-      @required this.UserName,
-      @required this.UID,
-      @required this.MedicineName,
-      @required this.Notes,
-      @required this.PhoneNumber,
-      @required this.PostTime,
-      @required this.ExpirationDate,
-      @required this.BloodType,
-      @required this.Type,
-      @required this.Location,
-      @required this.NeededQuntity});
+        @required this.UserName,
+        @required this.UID,
+        @required this.MedicineName,
+        @required this.Notes,
+        @required this.PhoneNumber,
+        @required this.PostTime,
+        @required this.ExpirationDate,
+        @required this.BloodType,
+        @required this.Type,
+        @required this.Location,
+        @required this.NeededQuntity});
 
   @override
   _PostsState createState() => _PostsState();
@@ -52,15 +52,15 @@ class _PostsState extends State<Posts> {
       if (widget.Type == "Request Medicine") {
         activeColor = MedicineActiveColor;
         url =
-            'sms:+${widget.PhoneNumber}?body= Hi, ${widget.UserName} \n i see your post about requesting ${widget.MedicineName} medicine, i have excess of that medicine , i can meet you at the location you mentioned in the post ,please contact me to arrange the meeting time.';
+        'sms:+${widget.PhoneNumber}?body= Hi, ${widget.UserName} \n i see your post about requesting ${widget.MedicineName} medicine, i have excess of that medicine , i can meet you at the location you mentioned in the post ,please contact me to arrange the meeting time.';
       } else if (widget.Type == "Giving Medicine") {
         activeColor = Colors.green;
         url =
-            'sms:+${widget.PhoneNumber}?body= Hi, ${widget.UserName} \n i see your post about donating ${widget.MedicineName} medicine, i really need that medicine , i can meet you at the location you mentioned in the post ,please contact me to arrange the meeting time.';
+        'sms:+${widget.PhoneNumber}?body= Hi, ${widget.UserName} \n i see your post about donating ${widget.MedicineName} medicine, i really need that medicine , i can meet you at the location you mentioned in the post ,please contact me to arrange the meeting time.';
       } else {
         activeColor = BloodActiveColor;
         url =
-            'sms:+${widget.PhoneNumber}?body= Hi, ${widget.UserName} \n i see your post about donating/requesting ${widget.BloodType} Blood, i can meet you at the location you mentioned in the post ,please contact me to arrange the meeting time.';
+        'sms:+${widget.PhoneNumber}?body= Hi, ${widget.UserName} \n i see your post about donating/requesting ${widget.BloodType} Blood, i can meet you at the location you mentioned in the post ,please contact me to arrange the meeting time.';
         ExpirationDate =
             DateFormat('dd-MM-yyyy').format(widget.ExpirationDate).toString();
       }
@@ -71,10 +71,10 @@ class _PostsState extends State<Posts> {
         time = "${DateTime.now().difference(widget.PostTime).inDays} Days ago";
       } else if (DateTime.now().difference(widget.PostTime).inHours != 0) {
         time =
-            "${DateTime.now().difference(widget.PostTime).inHours} Hours ago";
+        "${DateTime.now().difference(widget.PostTime).inHours} Hours ago";
       } else {
         time =
-            "${DateTime.now().difference(widget.PostTime).inMinutes} Min ago";
+        "${DateTime.now().difference(widget.PostTime).inMinutes} Min ago";
       }
     });
   }
@@ -122,13 +122,18 @@ class _PostsState extends State<Posts> {
                 child: Column(
                   children: [
                     Row(children: [
-                      // Image(
-                      //   image: AssetImage('assets/pill-emoji.png'),
-                      //   width: 30.0,
-                      //   height: 30.0,
-                      // ),
+                      Tooltip(
+                        message: "Concentration",
+                        verticalOffset: 12,
+                        height: 12,
+                        child: Image(
+                          image: AssetImage('assets/pills.png'),
+                          width: 30.0,
+                          height: 30.0,
+                        ),
+                      ),
                       AutoSizeText(
-                        "${Emojis.pill} : ${widget.MedicineName.toUpperCase()}",
+                        " : ${widget.MedicineName.toUpperCase()}",
                         style: TextStyle(fontSize: 20),
                       ),
                     ]),
@@ -141,6 +146,16 @@ class _PostsState extends State<Posts> {
                       //   width: 30.0,
                       //   height: 30.0,
                       // ),
+                      Tooltip(
+                        message: "Concentration",
+                        verticalOffset: 12,
+                        height: 12,
+                        child: Image(
+                          image: AssetImage('assets/conen.png'),
+                          width: 30.0,
+                          height: 30.0,
+                        ),
+                      ),
                       AutoSizeText(
                         " : ${widget.Concentration}",
                         style: TextStyle(fontSize: 20),
@@ -150,9 +165,29 @@ class _PostsState extends State<Posts> {
                       height: 10.0,
                     ),
                     Row(children: [
+                      Tooltip(
+                        message: "Amout Needed",
+                        verticalOffset: 12,
+                        height: 12,
+                        child: Image(
+                          image: AssetImage('assets/amount.png'),
+                          width: 30.0,
+                          height: 30.0,
+                        ),
+                      ),
+                      AutoSizeText(
+                        " : ${widget.NeededQuntity}",
+                        style: TextStyle(fontSize: 20),
+                      ),
+                    ]),
+                    SizedBox(
+                      height: 10.0,
+                    ),
+                    Row(children: [
                       Icon(
                         Icons.location_on,
-                        color: Colors.blue,
+                        color: activeColor,
+                        size: 25.0,
                       ),
                       AutoSizeText(
                         " : ${widget.Location}",
@@ -160,6 +195,24 @@ class _PostsState extends State<Posts> {
                       ),
                     ]),
                     SizedBox(height: 20.0),
+                    Row(children: [
+                      Tooltip(
+                        message: "Extra Info",
+                        verticalOffset: 12,
+                        height: 12,
+                        child: Icon(
+                          Icons.info,
+                          color: activeColor,
+                        ),
+                      ),
+                      AutoSizeText(
+                        " : ${widget.Notes}",
+                        style: TextStyle(fontSize: 20),
+                      ),
+                    ]),
+                    SizedBox(
+                      height: 10.0,
+                    ),
                     Divider(
                       height: 0.0,
                       color: Color.fromRGBO(154, 93, 255, 1.0),
@@ -289,25 +342,25 @@ class _PostsState extends State<Posts> {
                 child: Column(
                   children: [
                     Row(children: [
-                      // Image(
-                      //   image: AssetImage('assets/pill-emoji.png'),
-                      //   width: 30.0,
-                      //   height: 30.0,
-                      // ),
                       AutoSizeText(
                         "${Emojis.pill} : ${widget.MedicineName.toUpperCase()}",
                         style: TextStyle(fontSize: 20),
                       ),
                     ]),
                     SizedBox(
-                      height: 10.0,
+                      height: 15.0,
                     ),
                     Row(children: [
-                      // Image(
-                      //   image: AssetImage('assets/tube.png'),
-                      //   width: 30.0,
-                      //   height: 30.0,
-                      // ),
+                      Tooltip(
+                        message: "Concentration",
+                        verticalOffset: 12,
+                        height: 12,
+                        child: Image(
+                          image: AssetImage('assets/conen.png'),
+                          width: 30.0,
+                          height: 30.0,
+                        ),
+                      ),
                       AutoSizeText(
                         " : ${widget.Concentration}",
                         style: TextStyle(fontSize: 20),
@@ -319,10 +372,43 @@ class _PostsState extends State<Posts> {
                     Row(children: [
                       Icon(
                         Icons.location_on,
-                        color: Colors.blue,
+                        color: activeColor,
                       ),
                       AutoSizeText(
                         " : ${widget.Location}",
+                        style: TextStyle(fontSize: 20),
+                      ),
+                    ]),
+                    SizedBox(height: 20.0),
+                    Row(children: [
+                      Tooltip(
+                        message: "Amount Needed",
+                        verticalOffset: 12,
+                        height: 12,
+                        child: Image(
+                          image: AssetImage('assets/amount.png'),
+                          width: 30.0,
+                          height: 30.0,
+                        ),
+                      ),
+                      AutoSizeText(
+                        " : ${widget.NeededQuntity} Tablets",
+                        style: TextStyle(fontSize: 20),
+                      ),
+                    ]),
+                    SizedBox(height: 20.0),
+                    Row(children: [
+                      Tooltip(
+                        message: "Extra Info",
+                        verticalOffset: 12,
+                        height: 12,
+                        child: Icon(
+                          Icons.info,
+                          color: activeColor,
+                        ),
+                      ),
+                      AutoSizeText(
+                        " : ${widget.Notes}",
                         style: TextStyle(fontSize: 20),
                       ),
                     ]),
@@ -456,13 +542,40 @@ class _PostsState extends State<Posts> {
                 child: Column(
                   children: [
                     Row(children: [
-                      Icon(
-                        const IconData(0xe800,
-                            fontFamily: 'MyFlutterApp', fontPackage: null),
-                        color: Colors.red,
+                      Tooltip(
+                        message: "Blood Type",
+                        verticalOffset: 12,
+                        height: 12,
+                        child: Padding(
+                          padding: const EdgeInsets.only(left: 2.0),
+                          child: Icon(
+                            const IconData(0xe800,
+                                fontFamily: 'MyFlutterApp', fontPackage: null),
+                            color: Colors.red,
+                          ),
+                        ),
                       ),
                       AutoSizeText(
-                        ": ${widget.BloodType.toUpperCase()}",
+                        " : ${widget.BloodType.toUpperCase()}",
+                        style: TextStyle(fontSize: 20),
+                      ),
+                    ]),
+                    SizedBox(
+                      height: 10.0,
+                    ),
+                    Row(mainAxisAlignment: MainAxisAlignment.start, children: [
+                      Tooltip(
+                        message: "Amout Needed",
+                        verticalOffset: 12,
+                        height: 12,
+                        child: Image(
+                          image: AssetImage('assets/bloodamount.png'),
+                          width: 30.0,
+                          height: 30.0,
+                        ),
+                      ),
+                      AutoSizeText(
+                        " : ${widget.NeededQuntity}",
                         style: TextStyle(fontSize: 20),
                       ),
                     ]),
@@ -470,18 +583,17 @@ class _PostsState extends State<Posts> {
                       height: 10.0,
                     ),
                     Row(children: [
-                      AutoSizeText(
-                        " ${Emojis.dropOfBlood}  : ${widget.NeededQuntity}",
-                        style: TextStyle(fontSize: 20),
-                      ),
-                    ]),
-                    SizedBox(
-                      height: 10.0,
-                    ),
-                    Row(children: [
-                      Icon(
-                        Icons.location_on,
-                        color: Colors.blue,
+                      Padding(
+                        padding: const EdgeInsets.only(left: 2.0),
+                        child: Tooltip(
+                          message: "Location",
+                          verticalOffset: 12,
+                          height: 12,
+                          child: Icon(
+                            Icons.location_on,
+                            color: activeColor,
+                          ),
+                        ),
                       ),
                       AutoSizeText(
                         " : ${widget.Location}",
@@ -489,6 +601,27 @@ class _PostsState extends State<Posts> {
                       ),
                     ]),
                     SizedBox(height: 20.0),
+                    Row(children: [
+                      Tooltip(
+                        message: "Extra Info",
+                        verticalOffset: 12,
+                        height: 12,
+                        child: Padding(
+                          padding: const EdgeInsets.only(left: 2.0),
+                          child: Icon(
+                            Icons.info,
+                            color: activeColor,
+                          ),
+                        ),
+                      ),
+                      AutoSizeText(
+                        " : ${widget.Notes}",
+                        style: TextStyle(fontSize: 20),
+                      ),
+                    ]),
+                    SizedBox(
+                      height: 10.0,
+                    ),
                     Divider(
                       height: 0.0,
                       color: Color.fromRGBO(154, 93, 255, 1.0),

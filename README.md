@@ -27,13 +27,13 @@ At each stage of the medicines' trip from the donor to the recipient, a bar-code
 <div>
 
 ### Registration page:
-<img src="./readme_assets/register.jpg" alt="registeration" width="300"/>
+<img src="./readme_assets/register.jpg" alt="registration" width="300"/>
 <hr>
 </div>
 <div>
 
 ### Profile:
-<img src="./readme_assets/profile.jpg" alt="progile" width="300"/>
+<img src="./readme_assets/profile.jpg" alt="profile" width="300"/>
 <hr>
 </div>
 <div>
@@ -91,4 +91,4 @@ For production environments...
 ```
 ## License :scroll:
 
-> This software is licensed under MIT License, See [License](./LICENSE) for more information ©Pillarity
+> This Software is licensed under MIT License, See [License](./LICENSE) for more information ©Pillarity
