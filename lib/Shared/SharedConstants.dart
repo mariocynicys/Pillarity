@@ -698,6 +698,7 @@ final List<String> MedicinesArray = [
   "Palonosetron hydrochloride",
   "Panhematin",
   "Pantoprazole",
+  "Paracetamol",
   "Parafon Forte",
   "Parnate",
   "Paser",
