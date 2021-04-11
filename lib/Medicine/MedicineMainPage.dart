@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:medicine/Blood/Request_Blood.dart';
 import 'package:medicine/Medicine/Add_Medicine_Post.dart';
 import 'package:medicine/Medicine/Request_Medicine_Post.dart';
-import 'file:///D:/MY%20APPs/Flutter%20Apps/Pillarity/lib/Models/Profile.dart';
+import 'package:medicine/Models/Profile.dart';
 import 'package:medicine/Shared/SharedConstants.dart';
 import 'package:page_transition/page_transition.dart';
 import 'Medicine_Main_Posts.dart';
